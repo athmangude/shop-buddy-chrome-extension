@@ -5,8 +5,11 @@ import { RaisedButton } from 'material-ui';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import appTheme from '../../app/appTheme.js'
+import appTheme from '../../app/appTheme.js';
+
+injectTapEventPlugin();
 
 class InjectApp extends Component {
   constructor(props) {
@@ -31,7 +34,7 @@ class InjectApp extends Component {
             marginLeft: 'auto',
             marginRight: 'auto'
           }}
-          onClick={this.buttonOnClick}
+          onTouchTap={this.buttonOnClick}
           label="Proceed To Checkout" />
         <Dock
           position="right"
