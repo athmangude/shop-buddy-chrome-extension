@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Dock from 'react-dock';
+import { RaisedButton } from 'material-ui';
+
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import appTheme from '../../app/appTheme.js'
 
 class InjectApp extends Component {
   constructor(props) {
@@ -15,9 +21,18 @@ class InjectApp extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.buttonOnClick}>
-          Open TodoApp
-        </button>
+        <RaisedButton
+          style={{
+            position: 'fixed',
+            bottom: 10,
+            backgroundColor: '#1976D2',
+            left: '45%',
+            color: '#fff',
+            marginLeft: 'auto',
+            marginRight: 'auto'
+          }}
+          onClick={this.buttonOnClick}
+          label="Proceed To Checkout" />
         <Dock
           position="right"
           dimMode="transparent"
@@ -28,6 +43,7 @@ class InjectApp extends Component {
             style={{
               width: '100%',
               height: '100%',
+              zIndex: '99999999'
             }}
             frameBorder={0}
             allowTransparency="true"
@@ -44,5 +60,8 @@ window.addEventListener('load', () => {
   injectDOM.className = 'inject-react-example';
   injectDOM.style.textAlign = 'center';
   document.body.appendChild(injectDOM);
-  render(<InjectApp />, injectDOM);
+  render(
+    <MuiThemeProvider muiTheme={getMuiTheme(appTheme)}>
+      <InjectApp />
+    </MuiThemeProvider>, injectDOM);
 });
