@@ -25,7 +25,7 @@ function popWindow(type) {
 
 chrome.contextMenus.create({
   id: CONTEXT_MENU_ID,
-  title: 'React Chrome Extension Example',
+  title: 'Shop Buddy',
   contexts: ['all'],
   documentUrlPatterns: [
     'https://www.amazon.com/*',
