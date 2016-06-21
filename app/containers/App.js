@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import MainSection from '../components/MainSection';
 import * as TodoActions from '../actions/todos';
-import style from './App.css';
 
 @connect(
   state => ({
@@ -25,7 +24,7 @@ export default class App extends Component {
     const { todos, actions } = this.props;
 
     return (
-      <div className={style.normal}>
+      <div>
         <Header addTodo={actions.addTodo} />
         <MainSection todos={todos} actions={actions} />
       </div>
