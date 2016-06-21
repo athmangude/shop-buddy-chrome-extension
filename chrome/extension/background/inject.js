@@ -33,9 +33,7 @@ function loadScript(name, tabId, cb) {
 const arrowURLs = ['^https://www\\.amazon\\.com'];
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  console.log(arrowURLs.join('|'), tab.url, tab.url.match(arrowURLs.join('|')));
   if (changeInfo.status !== 'loading' || !tab.url.match(arrowURLs.join('|'))) return;
-  console.log('here ...');
 
   const result = await isInjected(tabId);
   if (chrome.runtime.lastError || result[0]) return;
