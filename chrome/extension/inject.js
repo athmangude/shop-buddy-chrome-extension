@@ -28,11 +28,12 @@ class InjectApp extends Component {
           style={{
             position: 'fixed',
             bottom: 10,
-            backgroundColor: '#1976D2',
+            backgroundColor: '#1976D2 !important',
             left: '45%',
             color: '#fff',
             marginLeft: 'auto',
-            marginRight: 'auto'
+            marginRight: 'auto',
+            zIndex: '99999998'
           }}
           onTouchTap={this.buttonOnClick}
           label="Proceed To Checkout" />
