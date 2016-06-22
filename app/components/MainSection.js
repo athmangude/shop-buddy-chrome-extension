@@ -36,7 +36,7 @@ class MainSection extends Component {
           <ListItem
             primaryText="Brendan Lim"
             secondaryText={`5 x 500`}
-            leftAvatar={<Avatar src="images/ok-128.jpg" />}
+            leftAvatar={<Avatar src="https://images-na.ssl-images-amazon.com/images/I/41YcmojSz4L._SS100_.jpg" />}
             rightAvatar={
               <Avatar
                 color={primaryColor} backgroundColor={transparent}
@@ -49,7 +49,7 @@ class MainSection extends Component {
           <ListItem
             primaryText="Eric Hoffman"
             secondaryText={`1 x 3,000`}
-            leftAvatar={<Avatar src="images/kolage-128.jpg" />}
+            leftAvatar={<Avatar src="https://avatars2.githubusercontent.com/u/2655082?v=3&u=e46725a4de477ef1e251e63776729ea8df05c283&s=140" />}
             rightAvatar={
               <Avatar
                 color={primaryColor} backgroundColor={transparent}
@@ -62,7 +62,7 @@ class MainSection extends Component {
           <ListItem
             primaryText="Grace Ng"
             secondaryText={`3 x 400`}
-            leftAvatar={<Avatar src="images/uxceo-128.jpg" />}
+            leftAvatar={<Avatar src="https://images-na.ssl-images-amazon.com/images/I/51nk%2BaSvOFL._SS100_.jpg" />}
             rightAvatar={
               <Avatar
                 color={primaryColor} backgroundColor={transparent}
@@ -75,7 +75,7 @@ class MainSection extends Component {
           <ListItem
             primaryText="Kerem Suer"
             secondaryText={`10 x 4,000`}
-            leftAvatar={<Avatar src="images/kerem-128.jpg" />}
+            leftAvatar={<Avatar src="https://images-na.ssl-images-amazon.com/images/I/41%2B12WrIXlL._SS100_.jpg" />}
             rightAvatar={
               <Avatar
                 color={primaryColor} backgroundColor={transparent}
@@ -88,7 +88,7 @@ class MainSection extends Component {
           <ListItem
             primaryText="Raquel Parrado"
             secondaryText={`2 x 10,000`}
-            leftAvatar={<Avatar src="images/raquelromanp-128.jpg" />}
+            leftAvatar={<Avatar src="https://images-na.ssl-images-amazon.com/images/I/41dX4Glgm7L._SY135_.jpg" />}
             rightAvatar={
               <Avatar
                 color={primaryColor} backgroundColor={transparent}
