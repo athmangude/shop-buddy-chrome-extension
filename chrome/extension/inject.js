@@ -37,11 +37,21 @@ class InjectApp extends Component {
    * - if the user is not, show them an alert to remind them to checkout with Shopbuddy if they are on a new session
    */
   render() {
+    // check if the alert was already displayed in session storage
+    let isDialogVisible;
+    let checkoutReminderDisplayed = window.sessionStorage.getItem('checkoutReminderDisplayed');
+    if (!checkoutReminderDisplayed) {
+      isDialogVisible = true;
+      window.sessionStorage.setItem('checkoutReminderDisplayed', true);
+    } else {
+      isDialogVisible = false;
+    }
+
     // check the location of the user
     if (window.location.href.match('https://www.amazon.com/gp/cart/view.html')) {
       return (
         <div>
-          <CheckoutReminder />
+          <CheckoutReminder isDialogVisible={isDialogVisible} />
           <RaisedButton
             style={{
               position: 'fixed',
@@ -52,7 +62,7 @@ class InjectApp extends Component {
               zIndex: '99999998'
             }}
             onTouchTap={this.buttonOnClick}
-            label="Proceed To Checkout"
+            label="Shopbuddy Checkout"
             secondary={true} />
           <Dock
             position="right"
@@ -77,7 +87,7 @@ class InjectApp extends Component {
     } else {
       return (
         <div>
-          <CheckoutReminder />
+          <CheckoutReminder isDialogVisible={isDialogVisible} />
         </div>
 
       )
