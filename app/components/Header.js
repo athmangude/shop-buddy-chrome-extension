@@ -22,6 +22,9 @@ export default class Header extends Component {
   render() {
     return (
       <AppBar
+        style={{
+          position: 'fixed'
+        }}
         title="Shopbuddy"
         iconElementLeft={<IconButton><CommunicationCall style={{ fontSize: 100 }} /></IconButton>}
       />
