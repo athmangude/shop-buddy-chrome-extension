@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 const host = 'localhost';
 const port = 3000;
-const hotScript = `webpack-hot-middleware/client?path=http://${host}:${port}/__webpack_hmr`;
+const hotScript = `webpack-hot-middleware/client?path=https://${host}:${port}/__webpack_hmr`;
 
 const baseDevConfig = () => ({
   devtool: 'eval-cheap-module-source-map',
@@ -12,7 +12,7 @@ const baseDevConfig = () => ({
     background: [hotScript, path.join(__dirname, '../chrome/extension/background')],
   },
   devMiddleware: {
-    publicPath: `http://${host}:${port}/js/`,
+    publicPath: `https://${host}:${port}/js/`,
     stats: {
       colors: true
     },
@@ -22,7 +22,7 @@ const baseDevConfig = () => ({
     path: path.join(__dirname, '../dev/js'),
     filename: '[name].bundle.js',
     chunkFilename: '[id].chunk.js',
-    publicPath: `http://${host}:${port}/js/`
+    publicPath: `https://${host}:${port}/js/`
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
