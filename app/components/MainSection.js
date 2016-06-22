@@ -6,6 +6,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import {pinkA200, transparent} from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import appTheme from '../appTheme.js';
+
+const primaryColor = getMuiTheme(appTheme).palette.primary1Color;
 
 const style = {
   margin: 12,
@@ -35,7 +39,7 @@ class MainSection extends Component {
             leftAvatar={<Avatar src="images/ok-128.jpg" />}
             rightAvatar={
               <Avatar
-                color={pinkA200} backgroundColor={transparent}
+                color={primaryColor} backgroundColor={transparent}
                 style={{ right: 8, width: 60 }}
               >
                 2,500
@@ -48,7 +52,7 @@ class MainSection extends Component {
             leftAvatar={<Avatar src="images/kolage-128.jpg" />}
             rightAvatar={
               <Avatar
-                color={pinkA200} backgroundColor={transparent}
+                color={primaryColor} backgroundColor={transparent}
                 style={{ right: 8, width: 60 }}
               >
                 3,000
@@ -61,7 +65,7 @@ class MainSection extends Component {
             leftAvatar={<Avatar src="images/uxceo-128.jpg" />}
             rightAvatar={
               <Avatar
-                color={pinkA200} backgroundColor={transparent}
+                color={primaryColor} backgroundColor={transparent}
                 style={{ right: 8, width: 60 }}
               >
                 1,200
@@ -74,7 +78,7 @@ class MainSection extends Component {
             leftAvatar={<Avatar src="images/kerem-128.jpg" />}
             rightAvatar={
               <Avatar
-                color={pinkA200} backgroundColor={transparent}
+                color={primaryColor} backgroundColor={transparent}
                 style={{ right: 8, width: 60 }}
               >
               40,000
@@ -87,7 +91,7 @@ class MainSection extends Component {
             leftAvatar={<Avatar src="images/raquelromanp-128.jpg" />}
             rightAvatar={
               <Avatar
-                color={pinkA200} backgroundColor={transparent}
+                color={primaryColor} backgroundColor={transparent}
                 style={{ right: 8, width: 60 }}
               >
                 20,000
@@ -102,7 +106,7 @@ class MainSection extends Component {
           flexDirection: 'column'
         }}>
           <Paper zDepth={0}>
-            <h1 style={{ fontWeight: 'normal' }}>KES. 98,500/-</h1>
+            <h1 style={{ fontWeight: 'normal', color: primaryColor }}>KES. 98,500/-</h1>
           </Paper>
           <RaisedButton
           label="Checkout with Shopbuddy"
