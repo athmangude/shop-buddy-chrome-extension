@@ -1,14 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class CheckoutReminder extends Component {
+    static propTypes = {
+        isDialogVisible: PropTypes.bool.isRequired,
+    };
+
     constructor(props) {
         super(props)
 
         this.state = {
-            open: true
+            open: this.props.isDialogVisible,
         }
     }
 
@@ -21,10 +25,11 @@ class CheckoutReminder extends Component {
     };
 
     render() {
+        console.log(this.state, this.props);
         const actions = [
             <FlatButton
                 label="Sure"
-                primary={true}
+                secondary={true}
                 keyboardFocused={true}
                 onTouchTap={this.handleClose}
             />,
