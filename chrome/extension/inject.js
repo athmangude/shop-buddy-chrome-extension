@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import Dock from 'react-dock';
 import { RaisedButton } from 'material-ui';
 
+import CheckoutReminder from '../../app/components/checkout-reminder';
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -27,41 +29,60 @@ class InjectApp extends Component {
     this.setState({ isVisible: !this.state.isVisible });
   };
 
+  /**
+   * renders the appropriate components according to the location of the user
+   *
+   * - check the location of the user
+   * - if the user is at the cart page, display button to launch the dock
+   * - if the user is not, show them an alert to remind them to checkout with Shopbuddy if they are on a new session
+   */
   render() {
-    return (
-      <div>
-        <RaisedButton
-          style={{
-            position: 'fixed',
-            bottom: 10,
-            left: '45%',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            zIndex: '99999998'
-          }}
-          onTouchTap={this.buttonOnClick}
-          label="Proceed To Checkout"
-          secondary={true} />
-        <Dock
-          position="right"
-          dimMode="transparent"
-          defaultSize={0.4}
-          isVisible={this.state.isVisible}
-        >
-          <iframe
+    // check the location of the user
+    if (window.location.href.match('https://www.amazon.com/gp/cart/view.html')) {
+      return (
+        <div>
+          <CheckoutReminder />
+          <RaisedButton
             style={{
-              width: '100%',
-              height: '100%',
-              zIndex: '99999999'
+              position: 'fixed',
+              bottom: 10,
+              left: '45%',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              zIndex: '99999998'
             }}
-            frameBorder={0}
-            allowTransparency="true"
-            src={chrome.extension.getURL('inject.html')}
-            id="shopbuddy-iframe"
-          />
-        </Dock>
-      </div>
-    );
+            onTouchTap={this.buttonOnClick}
+            label="Proceed To Checkout"
+            secondary={true} />
+          <Dock
+            position="right"
+            dimMode="transparent"
+            defaultSize={0.4}
+            isVisible={this.state.isVisible}
+          >
+            <iframe
+              style={{
+                width: '100%',
+                height: '100%',
+                zIndex: '99999999'
+              }}
+              frameBorder={0}
+              allowTransparency="true"
+              src={chrome.extension.getURL('inject.html')}
+              id="shopbuddy-iframe"
+            />
+          </Dock>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <CheckoutReminder />
+        </div>
+
+      )
+    }
+
   }
 }
 
