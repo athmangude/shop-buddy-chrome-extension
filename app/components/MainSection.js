@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Avatar from 'material-ui/Avatar';
+import { Paper } from 'material-ui';
 import { List, ListItem } from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
@@ -23,7 +24,9 @@ class MainSection extends Component {
 
   render() {
     return (
-      <section>
+      <section style={{
+        paddingTop: 60
+      }}>
         <List>
           <Subheader>Items in your cart</Subheader>
           <ListItem
@@ -95,8 +98,12 @@ class MainSection extends Component {
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          flexDirection: 'column'
         }}>
+          <Paper zDepth={0}>
+            <h1 style={{ fontWeight: 'normal' }}>KES. 98,500/-</h1>
+          </Paper>
           <RaisedButton
           label="Checkout with Shopbuddy"
           secondary={true}
