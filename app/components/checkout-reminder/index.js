@@ -25,7 +25,6 @@ class CheckoutReminder extends Component {
     };
 
     render() {
-        console.log(this.state, this.props);
         const actions = [
             <FlatButton
                 label="Sure"
