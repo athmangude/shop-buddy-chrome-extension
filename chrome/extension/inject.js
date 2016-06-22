@@ -9,7 +9,13 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import appTheme from '../../app/appTheme.js';
 
-injectTapEventPlugin();
+try {
+  injectTapEventPlugin();
+} catch (e) {
+  console.log(e);
+} finally {
+  console.log('...');
+}
 
 class InjectApp extends Component {
   constructor(props) {
@@ -28,15 +34,14 @@ class InjectApp extends Component {
           style={{
             position: 'fixed',
             bottom: 10,
-            backgroundColor: '#1976D2 !important',
             left: '45%',
-            color: '#fff',
             marginLeft: 'auto',
             marginRight: 'auto',
             zIndex: '99999998'
           }}
           onTouchTap={this.buttonOnClick}
-          label="Proceed To Checkout" />
+          label="Proceed To Checkout"
+          secondary={true} />
         <Dock
           position="right"
           dimMode="transparent"
@@ -52,6 +57,7 @@ class InjectApp extends Component {
             frameBorder={0}
             allowTransparency="true"
             src={chrome.extension.getURL('inject.html')}
+            id="shopbuddy-iframe"
           />
         </Dock>
       </div>
@@ -59,7 +65,7 @@ class InjectApp extends Component {
   }
 }
 
-window.addEventListener('load', () => {
+// window.addEventListener('onDOMContentLoaded', () => {
   const injectDOM = document.createElement('div');
   injectDOM.className = 'inject-react-example';
   injectDOM.style.textAlign = 'center';
@@ -68,4 +74,14 @@ window.addEventListener('load', () => {
     <MuiThemeProvider muiTheme={getMuiTheme(appTheme)}>
       <InjectApp />
     </MuiThemeProvider>, injectDOM);
-});
+// });
+
+window.addEventListener('message', (event) => {
+  console.log(event);
+  var shopbuddyIframe = document.getElementById('shopbuddy-iframe');
+  if (event.origin === 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok') {
+    // request came from shopbuddy
+    event.source.postMessage({items: ['item1', 'item2']}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
+    // shopbuddyIframe.contentWindow.postMessage({items: ['item1', 'item2']}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
+  }
+})
