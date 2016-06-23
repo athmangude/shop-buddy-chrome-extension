@@ -25,6 +25,14 @@ export default class App extends Component {
     actions: PropTypes.object.isRequired
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cartItems: []
+    }
+  }
+
   componentDidMount() {
       setTimeout(function () {
           if (window.parent) {
@@ -33,8 +41,14 @@ export default class App extends Component {
       }, 1000);
 
       window.addEventListener('message', (event) => {
-          console.log(event);
-      })
+        // filter events from Amazon
+        if (event.origin === 'https://www.amazon.com') {
+          var cartItems = event.data.items;
+          this.setState({
+            cartItems: cartItems
+          })
+        }
+      });
   }
 
   render() {
@@ -44,7 +58,7 @@ export default class App extends Component {
         <MuiThemeProvider muiTheme={getMuiTheme(appTheme)}>
             <div>
                 <Header addTodo={actions.addTodo} />
-                <MainSection todos={todos} actions={actions} />
+                <MainSection todos={todos} actions={actions} cartItems={this.state.cartItems} />
             </div>
         </MuiThemeProvider>
     );
