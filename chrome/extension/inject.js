@@ -10,6 +10,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import appTheme from '../../app/appTheme.js';
+import { scrapStoreCheckoutPage } from './scrapper.js';
 
 try {
   injectTapEventPlugin();
@@ -110,9 +111,16 @@ class InjectApp extends Component {
 window.addEventListener('message', (event) => {
   console.log(event);
   var shopbuddyIframe = document.getElementById('shopbuddy-iframe');
+
+  // TODO: configure the extension id to be dynamic
   if (event.origin === 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok') {
     // request came from shopbuddy
-    event.source.postMessage({items: ['item1', 'item2']}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
-    // shopbuddyIframe.contentWindow.postMessage({items: ['item1', 'item2']}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
+    if (event.data.message === 'GET_CART_ITEMS') {
+      // shopbuddy wants items in the cart
+      // - scrap data from the page and send to shopbuddy React app
+      let cartItems = scrapStoreCheckoutPage(window.location.domain);
+      event.source.postMessage({items: cartItems}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
+      // shopbuddyIframe.contentWindow.postMessage({items: ['item1', 'item2']}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
+    }
   }
 });
