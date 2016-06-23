@@ -33,71 +33,22 @@ class MainSection extends Component {
       }}>
         <List>
           <Subheader>Items in your cart</Subheader>
-          <ListItem
-            primaryText="Brendan Lim"
-            secondaryText={`5 x 500`}
-            leftAvatar={<Avatar src="https://images-na.ssl-images-amazon.com/images/I/41YcmojSz4L._SS100_.jpg" />}
-            rightAvatar={
-              <Avatar
+          {this.props.cartItems.map((cartItem, i) => (
+            <ListItem
+              key={cartItem.asin}
+              primaryText={<div style={{ width: '91%' }}>{cartItem.title}</div>}
+              secondaryText={`${cartItem.quantity} x $${cartItem.price}`}
+              leftAvatar={<Avatar src={cartItem.imageUrl} />}
+              rightAvatar={
+                <Avatar
                 color={primaryColor} backgroundColor={transparent}
                 style={{ right: 8, width: 60 }}
-              >
-                2,500
-              </Avatar>
-            }
-          />
-          <ListItem
-            primaryText="Eric Hoffman"
-            secondaryText={`1 x 3,000`}
-            leftAvatar={<Avatar src="https://avatars2.githubusercontent.com/u/2655082?v=3&u=e46725a4de477ef1e251e63776729ea8df05c283&s=140" />}
-            rightAvatar={
-              <Avatar
-                color={primaryColor} backgroundColor={transparent}
-                style={{ right: 8, width: 60 }}
-              >
-                3,000
-              </Avatar>
-            }
-          />
-          <ListItem
-            primaryText="Grace Ng"
-            secondaryText={`3 x 400`}
-            leftAvatar={<Avatar src="https://images-na.ssl-images-amazon.com/images/I/51nk%2BaSvOFL._SS100_.jpg" />}
-            rightAvatar={
-              <Avatar
-                color={primaryColor} backgroundColor={transparent}
-                style={{ right: 8, width: 60 }}
-              >
-                1,200
-              </Avatar>
-            }
-          />
-          <ListItem
-            primaryText="Kerem Suer"
-            secondaryText={`10 x 4,000`}
-            leftAvatar={<Avatar src="https://images-na.ssl-images-amazon.com/images/I/41%2B12WrIXlL._SS100_.jpg" />}
-            rightAvatar={
-              <Avatar
-                color={primaryColor} backgroundColor={transparent}
-                style={{ right: 8, width: 60 }}
-              >
-              40,000
-              </Avatar>
-            }
-          />
-          <ListItem
-            primaryText="Raquel Parrado"
-            secondaryText={`2 x 10,000`}
-            leftAvatar={<Avatar src="https://images-na.ssl-images-amazon.com/images/I/41dX4Glgm7L._SY135_.jpg" />}
-            rightAvatar={
-              <Avatar
-                color={primaryColor} backgroundColor={transparent}
-                style={{ right: 8, width: 60 }}
-              >
-                20,000
-              </Avatar>
-            }
-          />
+                >
+                {`$${Number(cartItem.quantity * cartItem.price)}`}
+                </Avatar>
+              }
+            />
+          ))}
         </List>
         <div style={{
           display: 'flex',
