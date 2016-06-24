@@ -109,7 +109,6 @@ class InjectApp extends Component {
 // });
 
 window.addEventListener('message', (event) => {
-  console.log(event);
   var shopbuddyIframe = document.getElementById('shopbuddy-iframe');
 
   // TODO: configure the extension id to be dynamic
