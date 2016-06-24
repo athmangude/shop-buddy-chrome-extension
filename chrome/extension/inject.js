@@ -117,10 +117,14 @@ window.addEventListener('message', (event) => {
     // request came from shopbuddy
     if (event.data.message === 'GET_CART_ITEMS') {
       // shopbuddy wants items in the cart
+      // get the current exchange rate
       // - scrap data from the page and send to shopbuddy React app
-      let cartItems = scrapStoreCheckoutPage(window.location.domain);
-      event.source.postMessage({items: cartItems}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
-      // shopbuddyIframe.contentWindow.postMessage({items: ['item1', 'item2']}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
+      chrome.runtime.sendMessage({action: "GET_DOLLAR_EXCHANGE_RATE"}, function(response) {
+        let exchangeRate = response.rate;
+        let cartItems = scrapStoreCheckoutPage(window.location.domain, exchangeRate);
+        event.source.postMessage({items: cartItems}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
+        // shopbuddyIframe.contentWindow.postMessage({items: ['item1', 'item2']}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
+      });
     }
   }
 });
