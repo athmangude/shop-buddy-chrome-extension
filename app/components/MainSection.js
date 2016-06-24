@@ -26,6 +26,33 @@ class MainSection extends Component {
 
   constructor(props, context) {
     super(props, context);
+
+    this.state = {
+      total: 0,
+    }
+  }
+
+  _calculateTotal(cartItems) {
+    let total = 0;
+    cartItems.forEach((cartItem) => {
+      total += cartItem.quantity * cartItem.price;
+    });
+
+    return total;
+  }
+
+  componentDidMount() {
+    let total = this._calculateTotal(this.props.cartItems);
+    this.setState({
+      total: total,
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let total = this._calculateTotal(nextProps.cartItems);
+    this.setState({
+      total: total,
+    });
   }
 
   render() {
@@ -59,7 +86,7 @@ class MainSection extends Component {
           flexDirection: 'column'
         }}>
           <Paper zDepth={0}>
-            <h1 style={{ fontWeight: 'normal', color: primaryColor }}>KES. 98,500/-</h1>
+            <h1 style={{ fontWeight: 'normal', color: primaryColor }}>{`${accounting.formatMoney(this.state.total, { symbol: 'KES', format: '%s %v' })}`}/-</h1>
           </Paper>
           <RaisedButton
           label="Checkout with Shopbuddy"
