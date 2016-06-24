@@ -7,6 +7,8 @@ import Subheader from 'material-ui/Subheader';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import {pinkA200, transparent} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import accounting from 'accounting';
+
 import appTheme from '../appTheme.js';
 
 const primaryColor = getMuiTheme(appTheme).palette.primary1Color;
@@ -36,15 +38,15 @@ class MainSection extends Component {
           {this.props.cartItems.map((cartItem, i) => (
             <ListItem
               key={cartItem.asin}
-              primaryText={<div style={{ width: '91%' }}>{cartItem.title}</div>}
-              secondaryText={`${cartItem.quantity} x $${cartItem.price}`}
+              primaryText={<div style={{ width: '87%' }}>{cartItem.title}</div>}
+              secondaryText={`${cartItem.quantity} x ${accounting.formatMoney(cartItem.price, {symbol: '', format: "%s %v" })}`}
               leftAvatar={<Avatar src={cartItem.imageUrl} />}
               rightAvatar={
                 <Avatar
                 color={primaryColor} backgroundColor={transparent}
-                style={{ right: 8, width: 60 }}
+                style={{ right: 8, width: 90 }}
                 >
-                {`$${Number(cartItem.quantity * cartItem.price)}`}
+                {`${accounting.formatMoney(Number(cartItem.quantity * cartItem.price), { symbol: "",  format: "%s %v" })}`}
                 </Avatar>
               }
             />
