@@ -1,11 +1,11 @@
-require('./currencyConverter');
+var currencyConverter = require('./currencyConverter');
 
 /**
  * listen to messages from the content script and respond appropriately
  * @param {callback function with params} (request, sender, sendResponse
  *    @param request {the request object}
  *    @param sender { the sender object }
- *    @param send { callbacj function to allow sending back a response to the sender }
+ *    @param send { callback function to allow sending back a response to the sender }
  */
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // check the action on teh request object
@@ -20,12 +20,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
          * 		> Respond with the current rate
          */
 
-        console.log(request, sender, sendResponse);
-
-        sendResponse({
-            action: 'GET_DOLLAR_EXCHANGE_RATE',
-            rate: 101.27
+        currencyConverter('USD', 'KES', 1, function (response) {
+            sendResponse({
+                action: 'GET_DOLLAR_EXCHANGE_RATE',
+                rate: response
+            });
         });
 
+        return true;
     }
 });
