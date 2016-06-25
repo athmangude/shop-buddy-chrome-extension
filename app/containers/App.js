@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
-import MainSection from '../components/MainSection';
+
+import ShoppingCart from '../components/shopping-cart';
 import * as TodoActions from '../actions/todos';
 import * as CartActions from '../actions/cartItems';
 
@@ -103,8 +103,7 @@ export default class App extends Component {
     return (
         <MuiThemeProvider muiTheme={getMuiTheme(appTheme)}>
             <div>
-                <Header addTodo={actions.addTodo} />
-                <MainSection todos={todos} actions={actions} cartItems={this.props.cartItems} />
+              <ShoppingCart cartItems={this.props.cartItems} actions={actions} />
             </div>
         </MuiThemeProvider>
     );
