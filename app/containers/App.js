@@ -95,10 +95,25 @@ export default class App extends Component {
 
   render() {
     const { actions } = this.props;
+    let component;
+    switch (window.location.pathname) {
+      case '/inject/html':
+        component = <ShoppingCart cartItems={this.props.cartItems} actions={actions} />
+        break;
+      case '/popup.html':
+        component = <div>Popup</div>
+        break;
+      case '/window.html':
+        component = <div>Window</div>
+        break;
+      default:
+        component = <ShoppingCart cartItems={this.props.cartItems} actions={actions} />
+    }
+
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(appTheme)}>
-        <ShoppingCart cartItems={this.props.cartItems} actions={actions} />
+        {component}
       </MuiThemeProvider>
     );
   }
