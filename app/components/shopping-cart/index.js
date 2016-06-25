@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Header from './header';
-import MainSection from '../MainSection';
 import CartItems from './cart-items';
 
 class ShoppingCart extends Component {
@@ -12,7 +11,6 @@ class ShoppingCart extends Component {
         return (
             <div>
                 <Header />
-                {/*<MainSection actions={this.props.actions} cartItems={this.props.cartItems} />*/}
                 <CartItems actions={this.props.actions} cartItems={this.props.cartItems} />
             </div>
         );

@@ -101,11 +101,9 @@ export default class App extends Component {
     const { todos, actions } = this.props;
 
     return (
-        <MuiThemeProvider muiTheme={getMuiTheme(appTheme)}>
-            <div>
-              <ShoppingCart cartItems={this.props.cartItems} actions={actions} />
-            </div>
-        </MuiThemeProvider>
+      <MuiThemeProvider muiTheme={getMuiTheme(appTheme)}>
+        <ShoppingCart cartItems={this.props.cartItems} actions={actions} />
+      </MuiThemeProvider>
     );
   }
 }
