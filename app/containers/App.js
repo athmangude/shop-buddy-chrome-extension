@@ -31,11 +31,10 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-      setTimeout(function () {
-        if (window.parent) {
-          window.parent.postMessage({ message: 'GET_CART_ITEMS' }, '*');
-        }
-      }, 1000);
+      console.log(window.location);
+      if (window.parent) {
+        window.parent.postMessage({ message: 'GET_CART_ITEMS' }, '*');
+      }
 
       window.addEventListener('message', (event) => {
         // filter events from Amazon
@@ -95,7 +94,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { todos, actions } = this.props;
+    const { actions } = this.props;
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(appTheme)}>
