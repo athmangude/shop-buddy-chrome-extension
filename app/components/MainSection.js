@@ -20,7 +20,7 @@ const style = {
 class MainSection extends Component {
 
   static propTypes = {
-    todos: PropTypes.array.isRequired,
+    cartItems: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
   };
 
