@@ -16,7 +16,6 @@ class CartItems extends Component {
 
     static propTypes = {
         cartItems: PropTypes.array.isRequired,
-        actions: PropTypes.object.isRequired
     };
 
     constructor(props, context) {

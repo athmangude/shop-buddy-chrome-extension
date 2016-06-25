@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import ShoppingCart from '../components/shopping-cart';
-import * as TodoActions from '../actions/todos';
 import * as CartActions from '../actions/cartItems';
 
 import _ from 'lodash';
@@ -14,19 +13,17 @@ import appTheme from '../appTheme.js';
 
 @connect(
   state => ({
-    todos: state.todos,
     cartItems: state.cartItems,
   }),
   dispatch => ({
-    actions: bindActionCreators(TodoActions, dispatch),
     cartActions: bindActionCreators(CartActions, dispatch),
   })
 )
 export default class App extends Component {
 
   static propTypes = {
-    todos: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    cartItems: PropTypes.array.isRequired,
+    cartActions: PropTypes.object.isRequired
   };
 
   constructor(props) {
