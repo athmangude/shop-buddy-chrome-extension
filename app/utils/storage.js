@@ -2,11 +2,12 @@ function saveState(state) {
   chrome.storage.local.set({ state: JSON.stringify(state) });
 }
 
+// TODO: FIX THIS: setting the count on the badge does not work
+
 // todos unmarked count
-function setBadge(todos) {
+function setBadge(cartItems) {
   if (chrome.browserAction) {
-    const count = todos.filter((todo) => !todo.marked).length;
-    chrome.browserAction.setBadgeText({ text: count > 0 ? count.toString() : '' });
+    chrome.browserAction.setBadgeText({ text: cartItems.length.toString()});
   }
 }
 
@@ -16,7 +17,7 @@ export default function () {
     store.subscribe(() => {
       const state = store.getState();
       saveState(state);
-      setBadge(state.todos);
+      setBadge(state.cartItems);
     });
     return store;
   };
