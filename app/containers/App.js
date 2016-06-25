@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import MainSection from '../components/MainSection';
 import * as TodoActions from '../actions/todos';
+import * as CartActions from '../actions/cartItems';
 
+import _ from 'lodash';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import appTheme from '../appTheme.js';
@@ -12,10 +14,12 @@ import appTheme from '../appTheme.js';
 
 @connect(
   state => ({
-    todos: state.todos
+    todos: state.todos,
+    cartItems: state.cartItems,
   }),
   dispatch => ({
-    actions: bindActionCreators(TodoActions, dispatch)
+    actions: bindActionCreators(TodoActions, dispatch),
+    cartActions: bindActionCreators(CartActions, dispatch),
   })
 )
 export default class App extends Component {
@@ -27,26 +31,68 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      cartItems: []
-    }
   }
 
   componentDidMount() {
       setTimeout(function () {
-          if (window.parent) {
-              console.log(window.parent.postMessage({ message: 'GET_CART_ITEMS' }, '*'));
-          }
+        if (window.parent) {
+          window.parent.postMessage({ message: 'GET_CART_ITEMS' }, '*');
+        }
       }, 1000);
 
       window.addEventListener('message', (event) => {
         // filter events from Amazon
         if (event.origin === 'https://www.amazon.com') {
-          var cartItems = event.data.items;
-          this.setState({
-            cartItems: cartItems
-          })
+          let cartItems = event.data.items;
+
+          if (cartItems.length) {
+            // check if there are any cart items in the redux store
+            if (!this.props.cartItems.length) {
+              // there are no cart items
+              // add them
+              cartItems.forEach((cartItem) => {
+                this.props.cartActions.addCartItem(cartItem);
+              });
+            } else {
+              // check if the cart items in the are the same as the current cart items
+              if (JSON.stringify(this.props.cartItems) !== JSON.stringify(cartItems)) {
+                // store items and scrapped items don't match
+                // find missing items and put them in store
+                let missingItems = _.differenceBy(cartItems, this.props.cartItems, 'asin');
+
+                if (missingItems.length) {
+                  missingItems.forEach((cartItem) => {
+                    this.props.cartActions.addCartItem(cartItem);
+                  });
+                }
+              }
+            }
+
+            // check for out of stock items and remove them with nofications to the user
+            let outOfStockItems = cartItems.filter((cartItem) => {
+              if (cartItem.outOfStock !== '') {
+                return true;
+              }
+            });
+
+            if (outOfStockItems.length) {
+              outOfStockItems.forEach((outOfStockItem) => {
+                // find the item in the store
+                let identicalItemsInStore = this.props.cartItems.filter((cartItem) => {
+                  if (cartItem.asin === outOfStockItem.asin) {
+                    return true;
+                  }
+                });
+
+                // remove item in store
+                identicalItemsInStore.forEach((identicalItemInStore) => {
+                  this.props.cartActions.deleteCartItem(identicalItemInStore);
+                  // TODO: notify user of the out of stock item
+                });
+              });
+            }
+
+          }
         }
       });
   }
@@ -58,7 +104,7 @@ export default class App extends Component {
         <MuiThemeProvider muiTheme={getMuiTheme(appTheme)}>
             <div>
                 <Header addTodo={actions.addTodo} />
-                <MainSection todos={todos} actions={actions} cartItems={this.state.cartItems} />
+                <MainSection todos={todos} actions={actions} cartItems={this.props.cartItems} />
             </div>
         </MuiThemeProvider>
     );
