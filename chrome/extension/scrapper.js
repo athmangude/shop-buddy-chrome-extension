@@ -8,12 +8,13 @@ export const scrapStoreCheckoutPage = (host, exchangeRate) => {
     let convertedPrice, cartItem;
     for (var cartItemNode of cartItemNodes) {
         cartItem = {
+            title: $(cartItemNode).find(storeConfig.productTitle).text().replace(/(\r\n|\n|\r)/gm,""),
+            productLink: `https://www.amazon.com${$(cartItemNode).find(storeConfig.productLink).attr('href')}`,
             price: exchangeRate * parseFloat(cartItemNode.dataset.price),
             quantity: cartItemNode.dataset.quantity,
             asin: cartItemNode.dataset.asin,
             outOfStock: cartItemNode.dataset.outofstock,
             imageUrl: $(cartItemNode).find(storeConfig.imageNode).attr('src'),
-            title: $(cartItemNode).find(storeConfig.productTitle).text().replace(/(\r\n|\n|\r)/gm,""),
         }
 
         cartItems.push(cartItem);
