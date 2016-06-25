@@ -64,7 +64,7 @@ class MainSection extends Component {
           <Subheader>Items in your cart</Subheader>
           {this.props.cartItems.map((cartItem, i) => (
             <ListItem
-              key={cartItem.asin}
+              key={cartItem.id}
               primaryText={<div style={{ width: '87%' }}>{cartItem.title}</div>}
               secondaryText={`${cartItem.quantity} x ${accounting.formatMoney(cartItem.price, {symbol: '', format: "%s %v" })}`}
               leftAvatar={<Avatar src={cartItem.imageUrl} />}
