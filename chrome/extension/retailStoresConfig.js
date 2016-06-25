@@ -6,6 +6,7 @@ const storesConfig = [
         cartItem: 'div.sc-list-item',
         imageNode: 'img.sc-product-image',
         productTitle: 'span.a-size-medium.sc-product-title.a-text-bold',
+        productLink: 'a.a-link-normal.sc-product-link'
     }
 ]
 
