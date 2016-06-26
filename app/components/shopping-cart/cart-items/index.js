@@ -10,6 +10,7 @@ import accounting from 'accounting';
 
 import CartItem from './cart-item';
 import Footer from '../footer';
+import CartItemEditDialog from './cart-item-edit-dialog';
 import appTheme from '../../../appTheme.js';
 
 class CartItems extends Component {
@@ -23,6 +24,8 @@ class CartItems extends Component {
 
         this.state = {
             total: 0,
+            isDialogOpen: false,
+            cartItemInDialog: null,
         }
     }
 
@@ -49,15 +52,38 @@ class CartItems extends Component {
         });
     }
 
+    onCartItemDialogOpened(cartItem) {
+        this.setState({
+            isDialogOpen: true,
+            cartItemInDialog: cartItem,
+        });
+    }
+
+    onCartItemDialogClosed() {
+        this.setState({
+            isDialogOpen: false,
+            cartItemInDialog: null,
+        })
+    }
+
+    onCartItemUpdated(cartItem) {
+        this.props.actions.updateCartItem(cartItem)
+    }
+
+    onCartItemDeleted(cartItem) {
+        console.log(this.props);
+    }
+
     render() {
         return (
             <section style={{
                 paddingTop: 60
             }}>
+                <CartItemEditDialog isDialogOpen={this.state.isDialogOpen} cartItem={this.state.cartItemInDialog} onCloseCartItemDialog={this.onCartItemDialogClosed.bind(this)} onUpdateCartItem={this.onCartItemUpdated.bind(this)} onRemoveCartItem={this.onCartItemDeleted.bind(this)} />
                 <List>
                     <Subheader>Items in your cart</Subheader>
                     {this.props.cartItems.map((cartItem, i) => (
-                        <CartItem key={cartItem.id} cartItem={cartItem} />
+                        <CartItem key={cartItem.id} cartItem={cartItem} onOpenCartItemDialog={this.onCartItemDialogOpened.bind(this)}  />
                     ))}
                 </List>
                 <Footer total={this.state.total} />
