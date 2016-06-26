@@ -15,7 +15,7 @@ const actionsMap = {
   },
   [CartItemsActionTypes.UPDATE_CART_ITEM](state, action) {
     return state.map(cartItem =>
-      (todo.id === action.cartItem.id ?
+      (cartItem.id === action.cartItem.id ?
         Object.assign({}, cartItem, action.cartItem) :
         cartItem)
     );
