@@ -73,7 +73,7 @@ class CartItems extends Component {
     }
 
     onCartItemDeleted(cartItem) {
-        console.log(this.props);
+        this.props.actions.deleteCartItem(cartItem);
     }
 
     render() {
