@@ -15,7 +15,8 @@ class CartItemEditDialog extends Component {
 
         this.state = {
             quantity: this.props.isDialogOpen ? this.props.cartItem.quantity : '',
-            title: this.props.isDialogOpen ? this.props.cartItem.title : ''
+            title: this.props.isDialogOpen ? this.props.cartItem.title : '',
+            isConfirmDeleteDialogOpen: false,
         }
     }
 
@@ -29,8 +30,22 @@ class CartItemEditDialog extends Component {
         this.props.onCloseCartItemDialog();
     };
 
+    _handleConfirmDeleteDialogClose() {
+        this.setState({
+            isConfirmDeleteDialogOpen: false,
+        });
+    }
+
+    _handleDeleteDialogOpen() {
+        this.setState({
+            isConfirmDeleteDialogOpen: true,
+        });
+    }
+
     _handleRemoveFromCart = () => {
-        this.props.onCloseCartItemDialog();
+        this._handleConfirmDeleteDialogClose();
+        this._handleClose();
+        this.props.onRemoveCartItem(this.props.cartItem);
     };
 
     _handleUpdateQuantityInCart = () => {
@@ -51,13 +66,28 @@ class CartItemEditDialog extends Component {
                 label="Remove from Cart"
                 secondary={true}
                 keyboardFocused={true}
-                onTouchTap={this._handleRemoveFromCart.bind(this)}
+                onTouchTap={this._handleDeleteDialogOpen.bind(this)}
             />,
             <FlatButton
                 label="Update"
                 primary={true}
                 keyboardFocused={true}
                 onTouchTap={this._handleUpdateQuantityInCart.bind(this)}
+            />
+        ];
+
+        const deleteDialogAction = [
+            <FlatButton
+                label="Confirm"
+                secondary={true}
+                keyboardFocused={true}
+                onTouchTap={this._handleRemoveFromCart.bind(this)}
+            />,
+            <FlatButton
+                label="No"
+                primary={true}
+                keyboardFocused={true}
+                onTouchTap={this._handleConfirmDeleteDialogClose.bind(this)}
             />
         ];
 
@@ -78,6 +108,15 @@ class CartItemEditDialog extends Component {
                     defaultValue={this.state.quantity}
                     onChange={this._onQuantityChanged.bind(this)}
                 />
+                <Dialog
+                    title="Are you sure you want to remove this item?"
+                    actions={deleteDialogAction}
+                    modal={false}
+                    open={this.state.isConfirmDeleteDialogOpen}
+                    onRequestClose={this._handleClose}
+                >
+                    Removed items cart be returned to the cart by refreshing the page. <br /><br />If you don't want the item to be added to the cart later, please remove it from your Amazon cart
+                </Dialog>
             </Dialog>
         );
     }
