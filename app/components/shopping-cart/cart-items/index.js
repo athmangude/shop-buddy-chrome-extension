@@ -53,10 +53,12 @@ class CartItems extends Component {
     }
 
     onCartItemDialogOpened(cartItem) {
-        this.setState({
-            isDialogOpen: true,
-            cartItemInDialog: cartItem,
-        });
+        setTimeout( () => {
+            this.setState({
+                isDialogOpen: true,
+                cartItemInDialog: cartItem,
+            });
+        }, 250);
     }
 
     onCartItemDialogClosed() {
