@@ -31,7 +31,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-      console.log(window.location);
       if (window.parent) {
         window.parent.postMessage({ message: 'GET_CART_ITEMS' }, '*');
       }
@@ -94,11 +93,11 @@ export default class App extends Component {
   }
 
   render() {
-    const { actions } = this.props;
+    const { cartActions } = this.props;
     let component;
     switch (window.location.pathname) {
       case '/inject/html':
-        component = <ShoppingCart cartItems={this.props.cartItems} actions={actions} />
+        component = <ShoppingCart cartItems={this.props.cartItems} actions={cartActions} />
         break;
       case '/popup.html':
         component = <div>Popup</div>
@@ -107,7 +106,7 @@ export default class App extends Component {
         component = <div>Window</div>
         break;
       default:
-        component = <ShoppingCart cartItems={this.props.cartItems} actions={actions} />
+        component = <ShoppingCart cartItems={this.props.cartItems} actions={cartActions} />
     }
 
 
