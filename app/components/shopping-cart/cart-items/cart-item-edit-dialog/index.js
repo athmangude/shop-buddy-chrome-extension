@@ -115,7 +115,7 @@ class CartItemEditDialog extends Component {
                     open={this.state.isConfirmDeleteDialogOpen}
                     onRequestClose={this._handleClose}
                 >
-                    Removed items cart be returned to the cart by refreshing the page. <br /><br />If you don't want the item to be added to the cart later, please remove it from your Amazon cart
+                    Removed items cart be returned to the cart by refreshing the page. <br /><br />If you don't want the item to be added to the cart later, please remove it from your Amazon cart.
                 </Dialog>
             </Dialog>
         );
