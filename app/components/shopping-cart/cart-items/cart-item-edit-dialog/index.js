@@ -14,7 +14,8 @@ class CartItemEditDialog extends Component {
         super(props);
 
         this.state = {
-            quantity: this.props.isDialogOpen ? this.props.cartItem.quantity : ''
+            quantity: this.props.isDialogOpen ? this.props.cartItem.quantity : '',
+            title: this.props.isDialogOpen ? this.props.cartItem.title : ''
         }
     }
 
@@ -39,7 +40,8 @@ class CartItemEditDialog extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            quantity: nextProps.isDialogOpen ? nextProps.cartItem.quantity : ''
+            quantity: nextProps.isDialogOpen ? nextProps.cartItem.quantity : '',
+            title: nextProps.isDialogOpen ? nextProps.cartItem.title : 'false'
         });
     }
 
@@ -58,9 +60,10 @@ class CartItemEditDialog extends Component {
                 onTouchTap={this._handleUpdateQuantityInCart.bind(this)}
             />
         ];
+
         return (
             <Dialog
-                title="Edit Cart Item"
+                title={ this.state.title.length > 100 ? `${this.state.title.substring(0, 100)} ...` : `${this.state.title}` }
                 actions={actions}
                 modal={false}
                 open={this.props.isDialogOpen}
