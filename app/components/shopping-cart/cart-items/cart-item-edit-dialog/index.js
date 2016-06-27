@@ -44,7 +44,9 @@ class CartItemEditDialog extends Component {
 
     _handleRemoveFromCart = () => {
         this._handleConfirmDeleteDialogClose();
-        this._handleClose();
+        setTimeout( () => {
+            this._handleClose();
+        }, 500);
         this.props.onRemoveCartItem(this.props.cartItem);
     };
 
