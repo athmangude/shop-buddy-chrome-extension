@@ -9,6 +9,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import accounting from 'accounting';
 
 import CartItem from './cart-item';
+import EmptyCart from './empty-cart';
 import Footer from '../footer';
 import CartItemEditDialog from './cart-item-edit-dialog';
 import appTheme from '../../../appTheme.js';
@@ -77,20 +78,30 @@ class CartItems extends Component {
     }
 
     render() {
-        return (
-            <section style={{
-                paddingTop: 60
-            }}>
-                <CartItemEditDialog isDialogOpen={this.state.isDialogOpen} cartItem={this.state.cartItemInDialog} onCloseCartItemDialog={this.onCartItemDialogClosed.bind(this)} onUpdateCartItem={this.onCartItemUpdated.bind(this)} onRemoveCartItem={this.onCartItemDeleted.bind(this)} />
-                <List>
-                    <Subheader>Items in your cart</Subheader>
-                    {this.props.cartItems.map((cartItem, i) => (
-                        <CartItem key={cartItem.id} cartItem={cartItem} onOpenCartItemDialog={this.onCartItemDialogOpened.bind(this)}  />
-                    ))}
-                </List>
-                <Footer total={this.state.total} />
-            </section>
-        );
+        if (this.props.cartItems.length) {
+            return (
+                <section style={{
+                    paddingTop: 60
+                }}>
+                    <CartItemEditDialog isDialogOpen={this.state.isDialogOpen} cartItem={this.state.cartItemInDialog} onCloseCartItemDialog={this.onCartItemDialogClosed.bind(this)} onUpdateCartItem={this.onCartItemUpdated.bind(this)} onRemoveCartItem={this.onCartItemDeleted.bind(this)} />
+                    <List>
+                        <Subheader>Items in your cart</Subheader>
+                        {this.props.cartItems.map((cartItem, i) => (
+                            <CartItem key={cartItem.id} cartItem={cartItem} onOpenCartItemDialog={this.onCartItemDialogOpened.bind(this)}  />
+                        ))}
+                    </List>
+                    <Footer total={this.state.total} />
+                </section>
+            );
+        } else {
+            return (
+                <section style={{
+                    paddingTop: 60
+                }}>
+                    <EmptyCart />
+                </section>
+            );
+        }
     }
 }
 
