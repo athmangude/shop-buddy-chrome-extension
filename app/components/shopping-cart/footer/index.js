@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Paper, RaisedButton } from 'material-ui';
 import accounting from 'accounting';
 
+import Checkout from './checkout';
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import appTheme from '../../../appTheme.js';
 const primaryColor = getMuiTheme(appTheme).palette.primary1Color;
@@ -13,6 +15,20 @@ const style = {
 class Footer extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            isCheckingOut: false,
+            cartItemsSent: false,
+            checkingOutComplete: false,
+        }
+    }
+
+    onShopbuddyCheckout() {
+        this.setState({
+            isCheckingOut: true,
+        });
+
+        
     }
 
     render() {
@@ -24,10 +40,11 @@ class Footer extends Component {
                 flexDirection: 'column'
             }}>
                 <Paper zDepth={0}>
-                    {/*<h1 style={{ fontWeight: 'normal', color: primaryColor }}>{`${accounting.formatMoney(this.state.total, { symbol: 'KES', format: '%s %v' })}`}/-</h1>*/}
                     <h1 style={{ fontWeight: 'normal' }}>{`${accounting.formatMoney(this.props.total, { symbol: 'KES', format: '%s %v' })}`}/-</h1>
                 </Paper>
+                <Checkout isCheckingOut={this.state.isCheckingOut} />
                 <RaisedButton
+                    onTouchTap={this.onShopbuddyCheckout.bind(this)}
                     label="Checkout with Shopbuddy"
                     secondary={true}
                     style={style} />
