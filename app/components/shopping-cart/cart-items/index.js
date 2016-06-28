@@ -90,7 +90,7 @@ class CartItems extends Component {
                             <CartItem key={cartItem.id} cartItem={cartItem} onOpenCartItemDialog={this.onCartItemDialogOpened.bind(this)}  />
                         ))}
                     </List>
-                    <Footer total={this.state.total} />
+                    <Footer total={this.state.total} cartItems={this.props.cartItems} />
                 </section>
             );
         } else {
