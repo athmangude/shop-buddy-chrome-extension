@@ -112,7 +112,7 @@ window.addEventListener('message', (event) => {
   var shopbuddyIframe = document.getElementById('shopbuddy-iframe');
 
   // TODO: configure the extension id to be dynamic
-  if (event.origin === 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok') {
+  if (event.origin === 'chrome-extension://'+chrome.runtime.id) {
     // request came from shopbuddy
     if (event.data.message === 'GET_CART_ITEMS') {
       // shopbuddy wants items in the cart
@@ -121,7 +121,7 @@ window.addEventListener('message', (event) => {
       chrome.runtime.sendMessage({action: "GET_DOLLAR_EXCHANGE_RATE"}, function(response) {
         let exchangeRate = response.rate;
         let cartItems = scrapStoreCheckoutPage(window.location.domain, exchangeRate);
-        event.source.postMessage({items: cartItems}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
+        event.source.postMessage({items: cartItems}, 'chrome-extension://'+chrome.runtime.id);
         // shopbuddyIframe.contentWindow.postMessage({items: ['item1', 'item2']}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
       });
     }
