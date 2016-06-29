@@ -14,6 +14,7 @@ class Checkout extends Component {
         return (
             <Dialog
                 title="Hang tight! We are Sending your cart to our Servers"
+                titleStyle={{textAlign: 'center'}}
                 modal={true}
                 open={this.props.isCheckingOut}
             >
