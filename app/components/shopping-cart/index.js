@@ -11,7 +11,7 @@ class ShoppingCart extends Component {
         return (
             <div>
                 <Header />
-                <CartItems actions={this.props.actions} cartItems={this.props.cartItems} />
+                <CartItems { ...this.props } />
             </div>
         );
     }
