@@ -1,0 +1,2 @@
+export const BEGIN_CHECKOUT = 'BEGIN_CHECKOUT';
+export const END_CHECKOUT = 'END_CHECKOUT';
