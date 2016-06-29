@@ -113,7 +113,7 @@ class CartItemEditDialog extends Component {
                 <Dialog
                     title="Are you sure you want to remove this item?"
                     actions={deleteDialogAction}
-                    modal={false}
+                    modal={true}
                     open={this.state.isConfirmDeleteDialogOpen}
                     onRequestClose={this._handleClose}
                 >
