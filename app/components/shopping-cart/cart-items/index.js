@@ -70,11 +70,11 @@ class CartItems extends Component {
     }
 
     onCartItemUpdated(cartItem) {
-        this.props.actions.updateCartItem(cartItem)
+        this.props.cartActions.updateCartItem(cartItem)
     }
 
     onCartItemDeleted(cartItem) {
-        this.props.actions.deleteCartItem(cartItem);
+        this.props.cartActions.deleteCartItem(cartItem);
     }
 
     render() {
