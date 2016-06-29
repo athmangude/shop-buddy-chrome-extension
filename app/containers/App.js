@@ -34,14 +34,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
-
-  componentDidMount() {
       if (window.parent) {
         window.parent.postMessage({ message: 'GET_CART_ITEMS' }, '*');
       }

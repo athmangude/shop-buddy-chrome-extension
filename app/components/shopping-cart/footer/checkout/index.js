@@ -19,7 +19,6 @@ class Checkout extends Component {
     }
 
     render() {
-        console.log(this.props.app.isCheckingOut);
         let dialogComponent;
         this.props.app.isSendingCart ? dialogComponent = <CircularProgress size={2} secondary={true} color={accent1Color} /> : dialogComponent = <PaymentOptions { ...this.props } />
 
