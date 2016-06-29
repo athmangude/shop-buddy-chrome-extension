@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import ShoppingCart from '../components/shopping-cart';
 import * as CartActions from '../actions/cartItems';
+import * as AppActions from '../actions/app';
 
 import _ from 'lodash';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -14,9 +15,11 @@ import appTheme from '../appTheme.js';
 @connect(
   state => ({
     cartItems: state.cartItems,
+    app: state.app,
   }),
   dispatch => ({
     cartActions: bindActionCreators(CartActions, dispatch),
+    appActions: bindActionCreators(AppActions, dispatch),
   })
 )
 export default class App extends Component {
@@ -28,6 +31,14 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    console.log(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
   }
 
   componentDidMount() {
@@ -93,11 +104,11 @@ export default class App extends Component {
   }
 
   render() {
-    const { cartActions } = this.props;
+    const { cartActions, appActions, app } = this.props;
     let component;
     switch (window.location.pathname) {
       case '/inject/html':
-        component = <ShoppingCart cartItems={this.props.cartItems} actions={cartActions} />
+        component = <ShoppingCart { ...this.props } />
         break;
       case '/popup.html':
         component = <div>Popup</div>
@@ -106,7 +117,7 @@ export default class App extends Component {
         component = <div>Window</div>
         break;
       default:
-        component = <ShoppingCart cartItems={this.props.cartItems} actions={cartActions} />
+        component = <ShoppingCart { ...this.props } />
     }
 
 
