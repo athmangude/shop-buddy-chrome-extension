@@ -24,11 +24,15 @@ class Footer extends Component {
     }
 
     onShopbuddyCheckout() {
-        this.setState({
-            isCheckingOut: true,
-        });
+        this.props.appActions.beginCheckout();
 
-        
+        this.props.appActions.sendCart();
+
+        setTimeout( () => {
+            this.props.appActions.receiveCartSendingResponse();
+        }, 3000);
+
+
     }
 
     render() {
@@ -42,7 +46,7 @@ class Footer extends Component {
                 <Paper zDepth={0}>
                     <h1 style={{ fontWeight: 'normal' }}>{`${accounting.formatMoney(this.props.total, { symbol: 'KES', format: '%s %v' })}`}/-</h1>
                 </Paper>
-                <Checkout isCheckingOut={this.state.isCheckingOut} />
+                <Checkout { ...this.props } />
                 <RaisedButton
                     onTouchTap={this.onShopbuddyCheckout.bind(this)}
                     label="Checkout with Shopbuddy"
