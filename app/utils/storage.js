@@ -2,8 +2,6 @@ function saveState(state) {
   chrome.storage.local.set({ state: JSON.stringify(state) });
 }
 
-// TODO: FIX THIS: setting the count on the badge does not work
-
 // todos unmarked count
 function setBadge(cartItems) {
   if (chrome.browserAction) {
