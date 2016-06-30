@@ -39,7 +39,7 @@ class ThankYouMessage extends Component {
                         height: '100%'
                     }}
                 >
-                    <h4 style={{ marginBottom: 0 }}>Thank you for shopping with Shopbuddy</h4>
+                    <h4 style={{ marginBottom: 0 }}>Thank you for using Shopbuddy</h4>
                     <span>Shopbuddy loves [<Heart color="red" style={{ position: 'relative', bottom: -4, height: 18, width: 18 }} />] you</span>
                 </div>
 
