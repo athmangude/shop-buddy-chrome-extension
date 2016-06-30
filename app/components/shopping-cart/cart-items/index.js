@@ -3,13 +3,13 @@ import { Paper } from 'material-ui';
 import { List } from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import {transparent} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import accounting from 'accounting';
 
 import CartItem from './cart-item';
 import EmptyCart from './empty-cart';
+import ThankYouMessage from './thank-you-message';
 import Footer from '../footer';
 import CartItemEditDialog from './cart-item-edit-dialog';
 import appTheme from '../../../appTheme.js';
@@ -91,6 +91,14 @@ class CartItems extends Component {
                         ))}
                     </List>
                     <Footer total={this.state.total} { ...this.props } />
+                </section>
+            );
+        } else if (this.props.app.isCheckoutComplete) {
+            return (
+                <section style={{
+                    paddingTop: 60
+                }}>
+                    <ThankYouMessage { ...this.props } />
                 </section>
             );
         } else {
