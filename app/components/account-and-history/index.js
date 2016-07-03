@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 
 import Header from '../shopping-cart/header';
+import TransactionHistory from './transaction-history';
 
 import AccountIcon from 'material-ui/svg-icons/action/account-circle';
 import ListIcon from 'material-ui/svg-icons/action/list';
@@ -45,7 +46,7 @@ class AccountAndHistory extends Component {
 	        		value={this.state.value}
 	        		onChange={this.handleChange}
 	      		>
-	        		<Tab label="Account" value="account" icon={<AccountIcon color="#fff" />} >
+	        		<Tab label="Account" value="account">
 			          	<div>
 			            	<h2 style={styles.headline}>Account Info</h2>
 			            	<p>
@@ -55,14 +56,9 @@ class AccountAndHistory extends Component {
 			            	</p>
 			          	</div>
 	        		</Tab>
-	        		<Tab label="Transaction History" value="history" icon={<ListIcon color="#fff" />}>
+	        		<Tab label="Transaction History" value="history">
 	          			<div>
-	        				<h2 style={styles.headline}>User Transaction History</h2>
-	            			<p>
-				              	This is another example of a controllable tab. Remember, if you
-				              	use controllable Tabs, you need to give all of your tabs values or else
-				              	you wont be able to select them.
-	            			</p>
+	        				<TransactionHistory />
 	          			</div>
 	        		</Tab>
 	      		</Tabs>
