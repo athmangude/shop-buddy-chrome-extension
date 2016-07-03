@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import ShoppingCart from '../components/shopping-cart';
+import MyShopbuddy from '../components/my-shopbuddy';
+import AccountAndHistory from '../components/account-and-history';
 import * as CartActions from '../actions/cartItems';
 import * as AppActions from '../actions/app';
 
@@ -103,10 +105,10 @@ export default class App extends Component {
         component = <ShoppingCart { ...this.props } />
         break;
       case '/popup.html':
-        component = <div>Popup</div>
+        component = <MyShopbuddy { ...this.props } />
         break;
       case '/window.html':
-        component = <div>Window</div>
+        component = <AccountAndHistory { ...this.props } />
         break;
       default:
         component = <ShoppingCart { ...this.props } />
