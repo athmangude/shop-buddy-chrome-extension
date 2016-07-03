@@ -9,9 +9,9 @@ export default class Header extends Component {
   render() {
     return (
       <AppBar
-        style={{
+        style={Object.assign({
           position: 'fixed'
-        }}
+        }, this.props.appBarStyles ? this.props.appBarStyles : {})}
         title="Shopbuddy"
         iconElementLeft={<IconButton><ShoppingBasket style={{ fontSize: 100 }} /></IconButton>}
       />
