@@ -14,7 +14,6 @@ class ThankYouMessage extends Component {
     }
 
     onContinueShoppingTouchTapped() {
-        console.log(this.props);
         this.props.appActions.cancelCheckout();
     }
 
