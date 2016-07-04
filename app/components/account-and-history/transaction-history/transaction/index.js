@@ -14,11 +14,13 @@ class Transaction extends Component {
     }
 
     render() {
+        let time = moment().subtract(7, 'days');
+        let formattedTime = time.format('MMMM Do YYYY, hh:mm:ss');
         return (
             <Card>
                 <CardHeader
                     title={`Cart #${Math.random(1000000, 100000000) * 10000000000000000}`}
-                    subtitle={moment().subtract(7, 'days').format('MMMM Do YYYY, h:mm:ss a')}
+                    subtitle={`${formattedTime}, (${time.fromNow()})`}
                     actAsExpander={true}
                     showExpandableButton={true}
                 />
