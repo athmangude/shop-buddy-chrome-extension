@@ -3,6 +3,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 
 import Header from '../shopping-cart/header';
 import TransactionHistory from './transaction-history';
+import AccountInfo from './account-info';
 
 import AccountIcon from 'material-ui/svg-icons/action/account-circle';
 import ListIcon from 'material-ui/svg-icons/action/list';
@@ -47,19 +48,10 @@ class AccountAndHistory extends Component {
 	        		onChange={this.handleChange}
 	      		>
 	        		<Tab label="Account" value="account">
-			          	<div>
-			            	<h2 style={styles.headline}>Account Info</h2>
-			            	<p>
-				            	Tabs are also controllable if you want to programmatically pass them their values.
-				              	This allows for more functionality in Tabs such as not
-				              	having any Tab selected or assigning them different values.
-			            	</p>
-			          	</div>
+			          	<AccountInfo />
 	        		</Tab>
 	        		<Tab label="Transaction History" value="history">
-	          			<div>
-	        				<TransactionHistory />
-	          			</div>
+        				<TransactionHistory />
 	        		</Tab>
 	      		</Tabs>
 			</div>
