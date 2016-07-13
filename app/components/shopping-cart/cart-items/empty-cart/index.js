@@ -18,7 +18,7 @@ class EmptyCart extends Component {
             <Paper zDepth={0}>
                 <CardTitle title="There are no items in your cart" />
                 <CardText>
-                    <p>To add items into your cart, add them to your Amazon cart as you would while shopping normally on Amazon. Then navigate to your cart to view your cart items. Then click on the <RaisedButton secondary={true} disabled={true} style={{ fontWeight: 500, color: 'white', display: 'inline-block', paddingLeft: 10, paddingRight: 10, backgroundColor: accent1Color }}>SHOPBUDDY CHECKOUT</RaisedButton> button to reveal your shopbuddy cart and proceed to checkout</p>
+                    <p>To add items into your cart, add them to your Amazon cart as you would while shopping normally on Amazon. Then navigate to your cart to view your cart items. Then click on the <RaisedButton label="Shopbuddy Checkout" labelStyle={{ color: 'white' }} secondary={true} disabled={true} disabledBackgroundColor={accent1Color} style={{ fontWeight: 500, display: 'inline-block', }} /> button to reveal your shopbuddy cart and proceed to checkout</p>
                     <div style={{
                         display: 'flex',
                         alignItems: 'center',
