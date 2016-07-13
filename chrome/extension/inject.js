@@ -57,7 +57,7 @@ class InjectApp extends Component {
             style={{
               position: 'fixed',
               bottom: 10,
-              left: '45%',
+              left: '40%',
               marginLeft: 'auto',
               marginRight: 'auto',
               zIndex: '99999998'
