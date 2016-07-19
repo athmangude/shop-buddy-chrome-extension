@@ -25,7 +25,7 @@ import appTheme from '../appTheme.js';
   dispatch => ({
     cartActions: bindActionCreators(CartActions, dispatch),
     appActions: bindActionCreators(AppActions, dispatch),
-    authenticationActions: bindActionCreators(authenticationActions, dispatch),
+    authenticationActions: bindActionCreators(AuthenticationActions, dispatch),
   })
 )
 export default class App extends Component {
