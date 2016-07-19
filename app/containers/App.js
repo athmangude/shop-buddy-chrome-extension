@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import ShoppingCart from '../components/shopping-cart';
 import MyShopbuddy from '../components/my-shopbuddy';
-import AccountAndHistory from '../components/account-and-history';
+import WindowApp from '../components/window-app';
 
 import * as CartActions from '../actions/cartItems';
 import * as AppActions from '../actions/app';
@@ -112,7 +112,7 @@ export default class App extends Component {
         component = <MyShopbuddy { ...this.props } />
         break;
       case '/window.html':
-        component = <AccountAndHistory { ...this.props } />
+        component = <WindowApp { ...this.props } />
         break;
       default:
         component = <ShoppingCart { ...this.props } />
