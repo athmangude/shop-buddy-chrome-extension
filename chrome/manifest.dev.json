@@ -32,6 +32,6 @@
       "email"
     ]
   },
-  "permissions": [ "identity", "contextMenus", "management", "tabs", "activeTab", "storage", "https://www.amazon.com/*" ],
-  "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000 *; style-src * 'unsafe-inline' 'self' blob:; img-src * 'self' data:; font-src *;"
+  "permissions": [ "identity", "identity.email", "contextMenus", "management", "tabs", "activeTab", "storage", "https://www.amazon.com/*" ],
+  "content_security_policy": "default-src 'self'; frame-src *; script-src 'self' http://localhost:3000 https://localhost:3000 https://apis.google.com/js/api.js https://apis.google.com/js/client.js https://apis.google.com/_/scs/apps-static/_/js/k=oz.gapi.en.RuhPXpTlnG8.O/m=client/rt=j/sv=1/d=1/ed=1/am=EQ/rs=AGLTcCNMB9MjeIyHc7y8W5-Ah_HeVE35ow/cb=gapi.loaded_0 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000 *; style-src * 'unsafe-inline' 'self' blob:; img-src * 'self' data:; font-src *;"
 }
