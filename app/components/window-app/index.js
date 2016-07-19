@@ -11,12 +11,12 @@ class WindowApp extends Component {
     render() {
         if (!this.props.authentication.isLoggedIn) {
             return (
-                <SignIn />
+                <SignIn { ...this.props } />
             )
         }
 
         return (
-            <AccountAndHistory />
+            <AccountAndHistory { ...this.props } />
         )
     }
 }
