@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import ShoppingCart from '../components/shopping-cart';
 import MyShopbuddy from '../components/my-shopbuddy';
 import AccountAndHistory from '../components/account-and-history';
+
 import * as CartActions from '../actions/cartItems';
 import * as AppActions from '../actions/app';
+import * as AuthenticationActions from '../actions/authentication';
 
 import _ from 'lodash';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -18,10 +20,12 @@ import appTheme from '../appTheme.js';
   state => ({
     cartItems: state.cartItems,
     app: state.app,
+    authentication: state.authentication,
   }),
   dispatch => ({
     cartActions: bindActionCreators(CartActions, dispatch),
     appActions: bindActionCreators(AppActions, dispatch),
+    authenticationActions: bindActionCreators(authenticationActions, dispatch),
   })
 )
 export default class App extends Component {
