@@ -57,9 +57,6 @@ class MyShopbuddy extends Component {
     }
 
     render() {
-
-        console.log(this.props.authentication);
-
         let lastSuccessfulCheckout = this.props.app.lastSuccessfulCheckout ? <p style={styles.paragraph}>You last checked out {`${moment(this.props.app.lastSuccessfulCheckout).fromNow()}`}</p> : '';
         return (
             <div style={{
