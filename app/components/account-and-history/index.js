@@ -28,6 +28,7 @@ const styles = {
 	},
 };
 
+
 class AccountAndHistory extends Component {
   	constructor(props) {
     	super(props);
@@ -46,18 +47,18 @@ class AccountAndHistory extends Component {
     	return (
 			<div>
 				<Header appBarStyles={styles.header} />
-	      		<Tabs
-   					style={styles.tabs}
-   	        		value={this.state.value}
-   	        		onChange={this.handleChange}
-	      		>
-   	        		<Tab label="Account" value="account" style={styles.tab}>
-   			          	<AccountInfo />
-   	        		</Tab>
-   	        		<Tab label="Transaction History" value="history" style={styles.tab}>
-           				<TransactionHistory />
-   	        		</Tab>
-	      		</Tabs>
+            <Tabs
+               style={styles.tabs}
+               value={this.state.value}
+               onChange={this.handleChange}
+            >
+               <Tab label="Account" value="account" style={styles.tab}>
+                     <AccountInfo />
+               </Tab>
+               <Tab label="Transaction History" value="history" style={styles.tab}>
+                  <TransactionHistory />
+               </Tab>
+            </Tabs>
 			</div>
     	);
   	}
