@@ -19,9 +19,13 @@ const styles = {
 		paddingTop: 60,
 	},
 
+   tab: {
+      color: 'white',
+   },
+
 	header: {
 		boxShadow: '0 0 0 transparent',
-	}
+	},
 };
 
 class AccountAndHistory extends Component {
@@ -43,16 +47,16 @@ class AccountAndHistory extends Component {
 			<div>
 				<Header appBarStyles={styles.header} />
 	      		<Tabs
-					style={styles.tabs}
-	        		value={this.state.value}
-	        		onChange={this.handleChange}
+   					style={styles.tabs}
+   	        		value={this.state.value}
+   	        		onChange={this.handleChange}
 	      		>
-	        		<Tab label="Account" value="account">
-			          	<AccountInfo />
-	        		</Tab>
-	        		<Tab label="Transaction History" value="history">
-        				<TransactionHistory />
-	        		</Tab>
+   	        		<Tab label="Account" value="account" style={styles.tab}>
+   			          	<AccountInfo />
+   	        		</Tab>
+   	        		<Tab label="Transaction History" value="history" style={styles.tab}>
+           				<TransactionHistory />
+   	        		</Tab>
 	      		</Tabs>
 			</div>
     	);
