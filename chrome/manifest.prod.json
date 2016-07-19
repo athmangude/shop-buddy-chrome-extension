@@ -27,7 +27,10 @@
   },
   "oauth2": {
     "client_id": "533443841306-ufahtm8dbselgnr543vi509eqs3si8ro.apps.googleusercontent.com",
-    "scopes": []
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
   },
   "permissions": [ "identity", "contextMenus", "tabs", "storage", "https://www.amazon.com/*" ],
   "content_security_policy": "default-src 'self'; script-src 'self'; connect-src *; style-src * 'unsafe-inline'; img-src * 'self' data:; font-src *;"
