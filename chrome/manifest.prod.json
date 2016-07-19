@@ -28,8 +28,8 @@
   "oauth2": {
     "client_id": "533443841306-ufahtm8dbselgnr543vi509eqs3si8ro.apps.googleusercontent.com",
     "scopes": [
-      "https://www.googleapis.com/auth/userinfo.profile",
-      "https://www.googleapis.com/auth/userinfo.email"
+      "profile",
+      "email"
     ]
   },
   "permissions": [ "identity", "contextMenus", "tabs", "storage", "https://www.amazon.com/*" ],
