@@ -81,11 +81,30 @@ class SignIn extends Component {
                             'callback': (result) => {
 
                                 if (result.error) {
-                                    // open the snack to display the error
-                                    this.setState({
-                                        snackbarOpen: true,
-                                    });
 
+                                    // retry loging the user in one more time
+                                    window.gapi.auth.authorize(params, (result) => {
+                                        window.gapi.client.request({
+                                            'path': `/plus/v1/people/${userInfo.id}`,
+                                            'callback': (result) => {
+
+                                                if (result.error) {
+                                                    // open the snack to display the error
+                                                    this.setState({
+                                                        snackbarOpen: true,
+                                                    });
+
+                                                    return;
+                                                }
+
+                                                // update gplusProfile
+                                                this.setState({
+                                                    gplusProfile: result
+                                                });
+                                            }
+                                        });
+                                    });
+                                    
                                     return;
                                 }
 
@@ -128,7 +147,8 @@ class SignIn extends Component {
             actionButton =  <div style={styles.googleAPIsWaitingMessageContainer}>
                                 <CircularProgress size={0.5} color={accent1Color} />
                                 <label>Waiting for Google APIs</label>
-                                <small>(If this is taking too long, reload by pressing <code>CTRL+R</code> or <code>&#8984;+R</code>)</small>
+                                <small style={{fontSize: 10}}>This is because you have a bad internet connection</small>
+                                <small>(Check your internet connection and reload by pressing <code>CTRL+R</code> or <code>&#8984;+R</code>)</small>
                             </div>
         }
 
