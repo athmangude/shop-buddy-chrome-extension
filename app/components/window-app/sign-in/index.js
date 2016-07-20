@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { RaisedButton, Avatar, Snackbar, CircularProgress } from 'material-ui';
-import ActionAndroid from 'material-ui/svg-icons/action/android';
+import ShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
 import FontIcon from 'material-ui/FontIcon';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -104,7 +104,7 @@ class SignIn extends Component {
                                             }
                                         });
                                     });
-                                    
+
                                     return;
                                 }
 
@@ -142,7 +142,7 @@ class SignIn extends Component {
         let actionButton;
 
         if (this.state.googleAPIsReady) {
-            this.state.gplusProfile ? actionButton =  <RaisedButton label="Start Shopping" secondary={true} onTouchTap={this.onStartShoppingClicked.bind(this)} /> : actionButton =  <RaisedButton label="SignIn with Google" disabled={!this.state.googleAPIsReady} onTouchTap={this.onSignInClicked.bind(this)} icon={<FontIcon className="fa fa-google" style={styles.googleIcon} />} />;
+            this.state.gplusProfile ? actionButton =  <RaisedButton label="Start Shopping" secondary={true} onTouchTap={this.onStartShoppingClicked.bind(this)} icon={<ShoppingBasket />} /> : actionButton =  <RaisedButton label="SignIn with Google" disabled={!this.state.googleAPIsReady} onTouchTap={this.onSignInClicked.bind(this)} icon={<FontIcon className="fa fa-google" style={styles.googleIcon} />} />;
         } else {
             actionButton =  <div style={styles.googleAPIsWaitingMessageContainer}>
                                 <CircularProgress size={0.5} color={accent1Color} />
