@@ -54,7 +54,11 @@ class SignIn extends Component {
     }
 
     onStartShoppingClicked() {
-        console.log('finish signing in');
+        this.props.authenticationActions.endSigningIn({
+            authToken: this.state.authToken,
+            chromeUser: this.state.chromeUser,
+            gplusProfile: this.state.gplusProfile,
+        });
     }
 
     onSignInClicked() {
