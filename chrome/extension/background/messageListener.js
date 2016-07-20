@@ -10,6 +10,8 @@ var currencyConverter = require('./currencyConverter');
  *    @param send { callback function to allow sending back a response to the sender }
  */
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    // console.log(request, sender, sendResponse);
+
     // check the action on teh request object
     if (request.action === 'GET_DOLLAR_EXCHANGE_RATE') {
         /**
@@ -74,5 +76,26 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         });
 
         return true;
+    }
+});
+
+/**
+ * listen to messages from external pages
+ * @param {function} (request, sender, sendResponse) [callback function to respond]
+ */
+chrome.runtime.onMessageExternal.addListener( function(request, sender, sendResponse) {
+    // console.log(request, sender, sendResponse);
+
+    if (sender.url === 'chrome-extension://jllbjccoodgjljdmpijpmkhmdkndamho/window.html') {
+        if (request.message === 'GAPI_LOADED') {
+            // shopbuddy window is letting us know that GAPI is loaded
+            // send message to closest content script to enable login with Google button
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                console.log(tabs);
+                // chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
+                //     console.log(response.farewell);
+                // });
+            });
+        }
     }
 });
