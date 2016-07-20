@@ -27,6 +27,7 @@ class SignIn extends Component {
             authToken: null,
             chromeUser: null,
             gplusProfile: null,
+            googleAPIsReady: false,
         }
     }
 
@@ -80,10 +81,22 @@ class SignIn extends Component {
         });
     }
 
+    componentDidMount() {
+        const googleAPIsReadyIntervalId = window.setInterval( () => {
+            if (window.gapi) {
+                this.setState({
+                    googleAPIsReady: true,
+                });
+
+                window.clearInterval(googleAPIsReadyIntervalId);
+            }
+        }, 10);
+    }
+
     render() {
         let actionButton;
 
-        this.state.gplusProfile ? actionButton =  <RaisedButton label="Start Shopping" secondary={true} onTouchTap={this.onStartShoppingClicked.bind(this)} /> : actionButton =  <RaisedButton label="SignIn with Google" onTouchTap={this.onSignInClicked.bind(this)} icon={<FontIcon className="fa fa-google" style={styles.googleIcon} />} />;
+        this.state.gplusProfile ? actionButton =  <RaisedButton label="Start Shopping" secondary={true} onTouchTap={this.onStartShoppingClicked.bind(this)} /> : actionButton =  <RaisedButton label="SignIn with Google" disabled={!this.state.googleAPIsReady} onTouchTap={this.onSignInClicked.bind(this)} icon={<FontIcon className="fa fa-google" style={styles.googleIcon} />} />;
 
         return (
             <div style={styles.container}>
