@@ -4,7 +4,11 @@ const initialState = {
     isSignedIn: false,
     isSigningIn: false,
     isSigningInComplete: false,
-    signedInUser: null,
+    signedInUser: {
+      authToken: null,
+      chromeUser: null,
+      gplusProfile: null,
+    },
     lastSuccessfulSignIn: null,
 };
 
