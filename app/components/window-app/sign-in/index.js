@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { RaisedButton, Avatar } from 'material-ui';
+import { RaisedButton, Avatar, Snackbar, CircularProgress } from 'material-ui';
 import ActionAndroid from 'material-ui/svg-icons/action/android';
 import FontIcon from 'material-ui/FontIcon';
+
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import appTheme from '../../../appTheme.js';
+const accent1Color = getMuiTheme(appTheme).palette.accent1Color;
 
 const styles = {
     container: {
@@ -16,6 +20,13 @@ const styles = {
     googleIcon: {
         marginTop: 20,
         marginRight: 40,
+    },
+
+    googleAPIsWaitingMessageContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
     }
 }
 
@@ -28,6 +39,7 @@ class SignIn extends Component {
             chromeUser: null,
             gplusProfile: null,
             googleAPIsReady: false,
+            snackbarOpen: false,
         }
     }
 
@@ -67,7 +79,15 @@ class SignIn extends Component {
                         window.gapi.client.request({
                             'path': `/plus/v1/people/${userInfo.id}`,
                             'callback': (result) => {
-                                console.log(result);
+
+                                if (result.error) {
+                                    // open the snack to display the error
+                                    this.setState({
+                                        snackbarOpen: true,
+                                    });
+
+                                    return;
+                                }
 
                                 // update gplusProfile
                                 this.setState({
@@ -80,6 +100,12 @@ class SignIn extends Component {
             });
         });
     }
+
+    handleRequestClose = () => {
+        this.setState({
+            snackbarOpen: false,
+        });
+    };
 
     componentDidMount() {
         const googleAPIsReadyIntervalId = window.setInterval( () => {
@@ -96,7 +122,15 @@ class SignIn extends Component {
     render() {
         let actionButton;
 
-        this.state.gplusProfile ? actionButton =  <RaisedButton label="Start Shopping" secondary={true} onTouchTap={this.onStartShoppingClicked.bind(this)} /> : actionButton =  <RaisedButton label="SignIn with Google" disabled={!this.state.googleAPIsReady} onTouchTap={this.onSignInClicked.bind(this)} icon={<FontIcon className="fa fa-google" style={styles.googleIcon} />} />;
+        if (this.state.googleAPIsReady) {
+            this.state.gplusProfile ? actionButton =  <RaisedButton label="Start Shopping" secondary={true} onTouchTap={this.onStartShoppingClicked.bind(this)} /> : actionButton =  <RaisedButton label="SignIn with Google" disabled={!this.state.googleAPIsReady} onTouchTap={this.onSignInClicked.bind(this)} icon={<FontIcon className="fa fa-google" style={styles.googleIcon} />} />;
+        } else {
+            actionButton =  <div style={styles.googleAPIsWaitingMessageContainer}>
+                                <CircularProgress size={0.5} color={accent1Color} />
+                                <label>Waiting for Google APIs</label>
+                                <small>(If this is taking too long, reload by pressing <code>CTRL+R</code>)</small>
+                            </div>
+        }
 
         return (
             <div style={styles.container}>
@@ -106,6 +140,12 @@ class SignIn extends Component {
                 />
                 <h5>{this.state.gplusProfile ? `You are logged in as ${this.state.gplusProfile.name.givenName}` : `Sign in to start using Shopbuddy`}</h5>
                 {actionButton}
+                <Snackbar
+                    open={this.state.snackbarOpen}
+                    message="Oops! We couldn't sign you in. Please sign in to Chrome and try again."
+                    autoHideDuration={4000}
+                    onRequestClose={this.handleRequestClose}
+                />
             </div>
         );
     }
