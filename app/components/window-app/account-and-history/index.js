@@ -53,10 +53,10 @@ class AccountAndHistory extends Component {
                onChange={this.handleChange}
             >
                <Tab label="Account" value="account" style={styles.tab}>
-                     <AccountInfo />
+                     <AccountInfo { ...this.props } />
                </Tab>
                <Tab label="Transaction History" value="history" style={styles.tab}>
-                  <TransactionHistory />
+                  <TransactionHistory { ...this.props } />
                </Tab>
             </Tabs>
 			</div>
