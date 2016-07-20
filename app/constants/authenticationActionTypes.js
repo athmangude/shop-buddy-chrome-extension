@@ -1,3 +1,6 @@
 export const BEGIN_SIGNING_IN = 'BEGIN_SIGNING_INSIGN_OUT';
 export const SIGN_OUT = 'SIGN_OUT';
 export const END_SIGNING_IN = 'END_SIGNING_IN';
+export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
+export const SET_CHROME_USER = 'SET_CHROME_USER';
+export const SET_GPLUS_PROFILE = 'SET_GPLUS_PROFILE';
