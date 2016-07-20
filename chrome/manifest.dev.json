@@ -20,6 +20,9 @@
     "js": [ "libs/jquery-3.0.0.min.js" ],
     "matches": [ "https://www.amazon.com/*" ]
   }],
+  "externally_connectable": {
+    "matches": ["chrome-extension://jllbjccoodgjljdmpijpmkhmdkndamho/window.html"]
+  },
   "background": {
     "page": "background.html",
     "js": [ "libs/jquery-3.0.0.min.js" ],
