@@ -33,5 +33,5 @@
     ]
   },
   "permissions": [ "identity", "identity.email", "contextMenus", "management", "tabs", "activeTab", "storage", "https://www.amazon.com/*" ],
-  "content_security_policy": "default-src 'self'; frame-src *; script-src 'self' https://apis.google.com/js/api.js https://apis.google.com/js/client.js https://apis.google.com/_/scs/apps-static/_/js/k=oz.gapi.en.RuhPXpTlnG8.O/m=client/rt=j/sv=1/d=1/ed=1/am=EQ/rs=AGLTcCNMB9MjeIyHc7y8W5-Ah_HeVE35ow/cb=gapi.loaded_0 *; connect-src *; style-src * 'unsafe-inline'; img-src * 'self' data:; font-src *;"
+  "content_security_policy": "default-src 'self'; frame-src *; script-src 'self' https://apis.google.com *; connect-src *; style-src * 'unsafe-inline'; img-src * 'self' data:; font-src *;"
 }
