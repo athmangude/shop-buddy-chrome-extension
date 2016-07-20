@@ -36,7 +36,7 @@ class AccountInfo extends Component {
                     style={styles.avatar}
                 />
                 <h5>{this.props.authentication.signedInUser.gplusProfile.displayName}</h5>
-                <RaisedButton style={styles.logoutButton} label="Logout" secondary={true} onTouchTap={this.onLogoutTouchTapped.bind(this)} icon={<ExitToApp />} />
+                <RaisedButton style={styles.logoutButton} label="Sign Out" secondary={true} onTouchTap={this.onLogoutTouchTapped.bind(this)} icon={<ExitToApp />} />
             </div>
         );
     }
