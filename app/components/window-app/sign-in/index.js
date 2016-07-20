@@ -128,7 +128,7 @@ class SignIn extends Component {
             actionButton =  <div style={styles.googleAPIsWaitingMessageContainer}>
                                 <CircularProgress size={0.5} color={accent1Color} />
                                 <label>Waiting for Google APIs</label>
-                                <small>(If this is taking too long, reload by pressing <code>CTRL+R</code>)</small>
+                                <small>(If this is taking too long, reload by pressing <code>CTRL+R</code> or <code>&#8984;+R</code>)</small>
                             </div>
         }
 
