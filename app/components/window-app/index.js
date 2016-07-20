@@ -9,7 +9,7 @@ class WindowApp extends Component {
     }
 
     render() {
-        if (!this.props.authentication.isLoggedIn) {
+        if (!this.props.authentication.isSignedIn) {
             return (
                 <SignIn { ...this.props } />
             )
