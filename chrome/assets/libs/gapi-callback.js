@@ -1,3 +1,3 @@
 function gapiIsLoaded(){
-    console.log('gapi loaded');
+    // console.log('GApi loaded');
 }
