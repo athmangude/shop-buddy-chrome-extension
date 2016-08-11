@@ -4,8 +4,13 @@ import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 
 import ShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
+import ClearIcon from 'material-ui/svg-icons/content/clear';
 
 export default class Header extends Component {
+  onCloseTouchTapped() {
+    window.parent.postMessage({ message: 'HIDE_DOCK' }, '*');
+  }
+
   render() {
     return (
       <AppBar
@@ -14,6 +19,7 @@ export default class Header extends Component {
         }, this.props.appBarStyles ? this.props.appBarStyles : {})}
         title="Shopbuddy"
         iconElementLeft={<IconButton><ShoppingBasket style={{ fontSize: 100 }} /></IconButton>}
+        iconElementRight={<IconButton tooltip="Close" onTouchTap={this.onCloseTouchTapped.bind(this)}><ClearIcon style={{ fontSize: 100 }} /></IconButton>}
       />
     );
   }
