@@ -30,6 +30,17 @@ class InjectApp extends Component {
     this.setState({ isVisible: !this.state.isVisible });
   };
 
+  componentDidMount() {
+    window.addEventListener('message', (event) => {
+
+      if(event.data.message && event.data.message === 'HIDE_DOCK') {
+        this.setState({
+          isVisible: false,
+        });
+      }
+    });
+  }
+
   /**
    * renders the appropriate components according to the location of the user
    *
