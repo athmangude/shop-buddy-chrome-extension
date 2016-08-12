@@ -46,6 +46,9 @@ const baseDevConfig = () => ({
         presets: ['react-hmre']
       }
     }, {
+      test: /\.json$/,
+      loader: 'json-loader',
+    }, {
       test: /\.css$/,
       loaders: [
         'style',
