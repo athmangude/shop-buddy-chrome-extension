@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
+import FlatButton from 'material-ui/FlatButton';
 
 import ShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
@@ -15,6 +16,8 @@ export default class Header extends Component {
     let rightIcon;
     if (this.props.rightIcon === 'close') {
       rightIcon = <IconButton tooltip="Close" onTouchTap={this.onCloseTouchTapped.bind(this)}><ClearIcon style={{ fontSize: 100 }} /></IconButton>
+    } else if (this.props.rightIcon === 'version') {
+      rightIcon = <FlatButton label={<span style={{ textTransform: 'lowercase', }}>{`v${chrome.runtime.getManifest().version}`}</span>} disabled={true} />
     } else {
       rightIcon = <div></div>
     }

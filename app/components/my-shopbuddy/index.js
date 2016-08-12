@@ -63,7 +63,7 @@ class MyShopbuddy extends Component {
             <div style={{
                 height: 350
             }}>
-                <Header />
+                <Header rightIcon="version" />
                 <div style={styles.container}>
                     <p>Visit <a href="https://www.amazon.com/" style={styles.link} onClick={this.onLinkClicked}>Amazon.com</a> to continue shopping </p>
                     <Badge
