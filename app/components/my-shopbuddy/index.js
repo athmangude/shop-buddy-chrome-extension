@@ -5,6 +5,7 @@ import moment from 'moment';
 import Radium from 'radium';
 
 import Header from '../shopping-cart/header';
+import Footer from './footer';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import appTheme from '../../appTheme.js';
@@ -76,6 +77,7 @@ class MyShopbuddy extends Component {
                     <h4 style={styles.line}>You have {`${this.props.cartItems.length}`} items in your cart</h4>
                     {lastSuccessfulCheckout}
                 </div>
+                <Footer />
             </div>
         )
     }
