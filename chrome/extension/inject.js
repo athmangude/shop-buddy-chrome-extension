@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Dock from 'react-dock';
 import { RaisedButton } from 'material-ui';
+import $ from 'jquery';
+
 
 import CheckoutReminder from '../../app/components/checkout-reminder';
 
@@ -118,6 +120,16 @@ class InjectApp extends Component {
       <InjectApp />
     </MuiThemeProvider>, injectDOM);
 // });
+
+$(document).ready(() => {
+  $('<div id="shopbuddy-checkout-button-container" style="padding: 15px 0;">\
+    <button style="background: rgb(240, 193, 75); color: white; border: none; box-shadow: 1px 1px 1px rgba(0,0,0,0.3); text-transform: uppercase; text-align: center; width: 100%; height: 35px; border-radius: 2px; font-size: 15px; margin-bottom: 12px; ">Shopbuddy Checkout</button>\
+    <div class="a-divider a-divider-break sc-one-click-divider" style="margin-bottom: 0;">\
+      <h5>or</h5>\
+    </div>\
+  </div>').insertAfter('#sc-buy-box div.sc-subtotal.a-spacing-mini');
+  // const injectButton = $('#shopbuddy-checkout-button-container');
+})
 
 window.addEventListener('message', (event) => {
   var shopbuddyIframe = document.getElementById('shopbuddy-iframe');
