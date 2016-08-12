@@ -10,7 +10,7 @@ class ShoppingCart extends Component {
     render() {
         return (
             <div>
-                <Header />
+                <Header rightIcon='close' />
                 <CartItems { ...this.props } />
             </div>
         );

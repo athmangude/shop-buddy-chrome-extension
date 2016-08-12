@@ -12,6 +12,12 @@ export default class Header extends Component {
   }
 
   render() {
+    let rightIcon;
+    if (this.props.rightIcon === 'close') {
+      rightIcon = <IconButton tooltip="Close" onTouchTap={this.onCloseTouchTapped.bind(this)}><ClearIcon style={{ fontSize: 100 }} /></IconButton>
+    } else {
+      rightIcon = <div></div>
+    }
     return (
       <AppBar
         style={Object.assign({
@@ -19,7 +25,7 @@ export default class Header extends Component {
         }, this.props.appBarStyles ? this.props.appBarStyles : {})}
         title="Shopbuddy"
         iconElementLeft={<IconButton><ShoppingBasket style={{ fontSize: 100 }} /></IconButton>}
-        iconElementRight={<IconButton tooltip="Close" onTouchTap={this.onCloseTouchTapped.bind(this)}><ClearIcon style={{ fontSize: 100 }} /></IconButton>}
+        iconElementRight={rightIcon}
       />
     );
   }
