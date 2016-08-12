@@ -28,17 +28,23 @@ class InjectApp extends Component {
     this.state = { isVisible: false };
   }
 
-  buttonOnClick = () => {
-    this.setState({ isVisible: !this.state.isVisible });
-  };
+  // buttonOnClick = () => {
+  //   this.setState({ isVisible: !this.state.isVisible });
+  // };
 
   componentDidMount() {
     window.addEventListener('message', (event) => {
-
-      if(event.data.message && event.data.message === 'HIDE_DOCK') {
-        this.setState({
-          isVisible: false,
-        });
+      if(event.data.message) {
+        // show or hide the dock depending on the message received
+        if (event.data.message === 'HIDE_DOCK') {
+          this.setState({
+            isVisible: false,
+          });
+        } else if (event.data.message === 'SHOW_DOCK') {
+          this.setState({
+            isVisible: true,
+          });
+        }
       }
     });
   }
@@ -66,7 +72,7 @@ class InjectApp extends Component {
       return (
         <div>
           <CheckoutReminder isDialogVisible={isDialogVisible} />
-          <RaisedButton
+          {/*<RaisedButton
             style={{
               position: 'fixed',
               bottom: 10,
@@ -77,7 +83,7 @@ class InjectApp extends Component {
             }}
             onTouchTap={this.buttonOnClick}
             label="Shopbuddy Checkout"
-            secondary={true} />
+            secondary={true} />*/}
           <Dock
             position="right"
             dimMode="transparent"
@@ -122,14 +128,21 @@ class InjectApp extends Component {
 // });
 
 $(document).ready(() => {
-  $('<div id="shopbuddy-checkout-button-container" style="padding: 15px 0;">\
-    <button style="background: rgb(240, 193, 75); color: white; border: none; box-shadow: 1px 1px 1px rgba(0,0,0,0.3); text-transform: uppercase; text-align: center; width: 100%; height: 35px; border-radius: 2px; font-size: 15px; margin-bottom: 12px; ">Shopbuddy Checkout</button>\
-    <div class="a-divider a-divider-break sc-one-click-divider" style="margin-bottom: 0;">\
-      <h5>or</h5>\
-    </div>\
-  </div>').insertAfter('#sc-buy-box div.sc-subtotal.a-spacing-mini');
-  // const injectButton = $('#shopbuddy-checkout-button-container');
-})
+  if (!$('#shopbuddy-checkout-button-container').length) {
+    $('<div id="shopbuddy-checkout-button-container" style="padding: 15px 0;">\
+      <button id="shopbuddy-checkout-button" style="background: rgb(240, 193, 75); color: white; border: none; box-shadow: 1px 1px 1px rgba(0,0,0,0.3); text-transform: uppercase; text-align: center; width: 100%; height: 35px; border-radius: 2px; font-size: 15px; margin-bottom: 12px; ">Shopbuddy Checkout</button>\
+      <div class="a-divider a-divider-break sc-one-click-divider" style="margin-bottom: 0;">\
+        <h5>or</h5>\
+      </div>\
+    </div>').insertAfter('#sc-buy-box div.sc-subtotal.a-spacing-mini');
+    // const injectButton = $('#shopbuddy-checkout-button-container');
+
+    $('#shopbuddy-checkout-button-container').on('click', '#shopbuddy-checkout-button', function (event) {
+      event.preventDefault();
+      window.postMessage({message: 'SHOW_DOCK'}, '*');
+    });
+  }
+});
 
 window.addEventListener('message', (event) => {
   var shopbuddyIframe = document.getElementById('shopbuddy-iframe');
