@@ -1,4 +1,11 @@
 var moment = require('moment');
+var AmazonAPI = require('amz-products');
+
+var amazonProductsClient = new AmazonAPI({
+  accessKeyId     : 'AKIAIX4VTDIKSWDU3RCA',
+  secretAccessKey : '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',
+  associateId     : 'whatevs-20',
+});
 
 var currencyConverter = require('./currencyConverter');
 
@@ -13,44 +20,44 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // console.log(request, sender, sendResponse);
 
     // check the action on teh request object
-    if (request.action === 'GET_DOLLAR_EXCHANGE_RATE') {
-        /**
-         * The user wants the current exchange rate,
-         * 	if we have an exchange rate in storage for the current day
-         * 		if the timestamp is less than a day old
-         * 			> respond with the exchange rate
-         * 		else
-         * 			> get a new exchange rate
-         *
-         * 	if we don't have one
-         * 		> Make an http request to get one
-         * 		> Save it to storage
-         * 		> Respond with the current rate
-         */
+    switch (request.action) {
+        case 'LOOK_UP_AMAZON_ITEMS':
+          amazonProductsClient.getItemDetail({
+            IdType: "ASIN",
+            ItemId: "B018SZT3BK, B00QL1ZN3G",
+            ResponseGroup: "ItemAttributes",
+          }, function(error, result) {
+            console.log(error, result);
+            // if(error) {
+            //   console.log(error);
+            // } else {
+            //   console.log(result);
+            // }
+          });
 
-        // TODO: check if the exchange rate exists in storage and return
-        chrome.storage.sync.get('usdExchangeRate', function (results) {
-            // there is no exchange rate in storage
-            if (!results.usdExchangeRate) {
-                // request for an exchange rate
-                currencyConverter('USD', 'KES', 1, function (response) {
-                    //  save rate to storage
-                    chrome.storage.sync.set({
-                        usdExchangeRate: {
-                            rate: response,
-                            updatedAt: new Date(),
-                        }
-                    }, function () {
-                        sendResponse({
-                            action: 'GET_DOLLAR_EXCHANGE_RATE',
-                            rate: response
-                        });
-                    });
-                });
-            } else {
-                // check if the exchange rate was updated more than 0 days apart
-                if (moment(new Date()).diff(moment(results.usdExchangeRate.updatedAt), 'days') > 0) {
-                    // the exchange rate is more than 1 day old
+          sendResponse("LOOK_UP_AMAZON_ITEMS");
+          console.log('LOOK_UP_AMAZON_ITEMS: response sent');
+          return true;
+          break;
+        case 'GET_DOLLAR_EXCHANGE_RATE':
+            /**
+             * The user wants the current exchange rate,
+             * 	if we have an exchange rate in storage for the current day
+             * 		if the timestamp is less than a day old
+             * 			> respond with the exchange rate
+             * 		else
+             * 			> get a new exchange rate
+             *
+             * 	if we don't have one
+             * 		> Make an http request to get one
+             * 		> Save it to storage
+             * 		> Respond with the current rate
+             */
+
+            // TODO: check if the exchange rate exists in storage and return
+            chrome.storage.sync.get('usdExchangeRate', function (results) {
+                // there is no exchange rate in storage
+                if (!results.usdExchangeRate) {
                     // request for an exchange rate
                     currencyConverter('USD', 'KES', 1, function (response) {
                         //  save rate to storage
@@ -67,15 +74,36 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         });
                     });
                 } else {
-                    sendResponse({
-                        action: 'GET_DOLLAR_EXCHANGE_RATE',
-                        rate: results.usdExchangeRate.rate,
-                    });
+                    // check if the exchange rate was updated more than 0 days apart
+                    if (moment(new Date()).diff(moment(results.usdExchangeRate.updatedAt), 'days') > 0) {
+                        // the exchange rate is more than 1 day old
+                        // request for an exchange rate
+                        currencyConverter('USD', 'KES', 1, function (response) {
+                            //  save rate to storage
+                            chrome.storage.sync.set({
+                                usdExchangeRate: {
+                                    rate: response,
+                                    updatedAt: new Date(),
+                                }
+                            }, function () {
+                                sendResponse({
+                                    action: 'GET_DOLLAR_EXCHANGE_RATE',
+                                    rate: response
+                                });
+                            });
+                        });
+                    } else {
+                        sendResponse({
+                            action: 'GET_DOLLAR_EXCHANGE_RATE',
+                            rate: results.usdExchangeRate.rate,
+                        });
+                    }
                 }
-            }
-        });
+            });
 
-        return true;
+            return true;
+            break;
+        default:
     }
 });
 
