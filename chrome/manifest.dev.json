@@ -16,17 +16,29 @@
   "web_accessible_resources": [
     "inject.html"
   ],
-  "content_scripts": [ {
-    "js": [ "libs/jquery-3.0.0.min.js" ],
-    "matches": [ "https://www.amazon.com/*" ]
-  }],
+  "content_scripts": [
+    {
+      "js": [
+        "libs/jquery-3.0.0.min.js"
+      ],
+      "matches": [
+        "https://www.amazon.com/*"
+      ]
+    }
+  ],
   "externally_connectable": {
-    "matches": ["chrome-extension://jllbjccoodgjljdmpijpmkhmdkndamho/window.html"]
+    "matches": [
+      "chrome-extension://jllbjccoodgjljdmpijpmkhmdkndamho/window.html"
+    ]
   },
   "background": {
     "page": "background.html",
-    "js": [ "libs/jquery-3.0.0.min.js" ],
-    "matches": [ "https://www.amazon.com/*" ]
+    "js": [
+      "libs/jquery-3.0.0.min.js"
+    ],
+    "matches": [
+      "https://www.amazon.com/*"
+    ]
   },
   "oauth2": {
     "client_id": "533443841306-ufahtm8dbselgnr543vi509eqs3si8ro.apps.googleusercontent.com",
@@ -35,6 +47,15 @@
       "email"
     ]
   },
-  "permissions": [ "identity", "identity.email", "contextMenus", "management", "tabs", "activeTab", "storage", "https://www.amazon.com/*" ],
-  "content_security_policy": "default-src 'self'; frame-src *; script-src 'self' http://localhost:3000 https://localhost:3000 https://apis.google.com 'unsafe-eval'; object-src 'self'; connect-src http://localhost:3000 https://localhost:3000 *; style-src * 'unsafe-inline' 'self' blob:; img-src * 'self' data:; font-src *;"
+  "permissions": [
+    "identity",
+    "identity.email",
+    "contextMenus",
+    "management",
+    "tabs",
+    "activeTab",
+    "storage",
+    "https://www.amazon.com/*"
+  ],
+  "content_security_policy": "default-src 'self'; frame-src *; script-src 'self' http://localhost:3000 https://localhost:3000 https://apis.google.com http://54.200.181.243 'unsafe-eval'; object-src 'self'; connect-src http://localhost:3000 https://localhost:3000 *; style-src * 'unsafe-inline' 'self' blob:; img-src * 'self' data:; font-src *;"
 }

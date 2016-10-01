@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { RaisedButton, Avatar, Snackbar, CircularProgress } from 'material-ui';
 import ShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
 import FontIcon from 'material-ui/FontIcon';
+import $ from 'jquery';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import appTheme from '../../../appTheme.js';
@@ -59,6 +60,40 @@ class SignIn extends Component {
             chromeUser: this.state.chromeUser,
             gplusProfile: this.state.gplusProfile,
         });
+
+        this.authenticateWithShopbuddy(this.state.gplusProfile);
+    }
+
+    authenticateWithShopbuddy(gplusProfile) {
+        console.log(gplusProfile);
+
+        let request = {
+            method: 'POST',
+            url: 'http://54.200.181.243/api/user',
+            data: {
+                name: gplusProfile.displayName,
+                email: gplusProfile.emails[0].value,
+                password: gplusProfile.id, // convenirntly using gplus ID as password due to issues with the api design
+                password_confirmation: gplusProfile.id,
+            },
+        }
+
+        $.ajax(request)
+            .done((data, status, xhr) => {
+                console.log('SUCCESS');
+                // console.log(data, status, xhr);
+                console.log(data);
+            })
+            .fail((xhr, status, error) => {
+                console.log('ERROR');
+                console.log(xhr, status, error);
+                // console.log(error);
+
+                let responseObject = xhr.responseJSON;
+
+                // let responseObject = JSON.parse(xhr.responseText);
+                // console.log(responseObject);
+            });
     }
 
     onSignInClicked() {
@@ -162,7 +197,7 @@ class SignIn extends Component {
                     src={this.state.gplusProfile ? this.state.gplusProfile.image.url : 'chrome-extension://jllbjccoodgjljdmpijpmkhmdkndamho/img/icon-128.png'}
                     size={130}
                 />
-                <h5>{this.state.gplusProfile ? `You are logged in as ${this.state.gplusProfile.name.givenName}` : `Sign in to start using Shopbuddy`}</h5>
+                <h5>{this.state.gplusProfile ? `You will be logged in as ${this.state.gplusProfile.name.givenName}` : `Sign in to start using Shopbuddy`}</h5>
                 {actionButton}
                 <Snackbar
                     open={this.state.snackbarOpen}
