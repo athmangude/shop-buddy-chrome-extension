@@ -1,11 +1,4 @@
 var moment = require('moment');
-var AmazonAPI = require('amz-products');
-
-var amazonProductsClient = new AmazonAPI({
-  accessKeyId     : 'AKIAIX4VTDIKSWDU3RCA',
-  secretAccessKey : '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',
-  associateId     : 'whatevs-20',
-});
 
 var currencyConverter = require('./currencyConverter');
 
@@ -22,23 +15,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // check the action on teh request object
     switch (request.action) {
         case 'LOOK_UP_AMAZON_ITEMS':
-          amazonProductsClient.getItemDetail({
-            IdType: "ASIN",
-            ItemId: "B018SZT3BK, B00QL1ZN3G",
-            ResponseGroup: "ItemAttributes",
-          }, function(error, result) {
-            console.log(error, result);
-            // if(error) {
-            //   console.log(error);
-            // } else {
-            //   console.log(result);
-            // }
-          });
+            console.log(request);
 
-          sendResponse("LOOK_UP_AMAZON_ITEMS");
-          console.log('LOOK_UP_AMAZON_ITEMS: response sent');
-          return true;
-          break;
+            return true;
+            break;
         case 'GET_DOLLAR_EXCHANGE_RATE':
             /**
              * The user wants the current exchange rate,
