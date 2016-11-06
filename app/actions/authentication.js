@@ -8,6 +8,14 @@ export function endSigningIn(user) {
   return { type: types.END_SIGNING_IN, user };
 }
 
+export function setShopbuddyAPIProperties(object) {
+  return {
+    type: types.SET_SHOP_BUDDY_API_PROPERTIES,
+    token: object.token,
+    currentUser: object.currentUser,
+  };
+}
+
 export function signOut() {
   return { type: types.SIGN_OUT };
 }

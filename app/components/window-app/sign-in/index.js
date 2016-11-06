@@ -3,6 +3,7 @@ import { RaisedButton, Avatar, Snackbar, CircularProgress } from 'material-ui';
 import ShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
 import FontIcon from 'material-ui/FontIcon';
 import $ from 'jquery';
+import moment from 'moment';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import appTheme from '../../../appTheme.js';
@@ -55,6 +56,7 @@ class SignIn extends Component {
     }
 
     onStartShoppingClicked() {
+        console.log(this.state);
         this.props.authenticationActions.endSigningIn({
             authToken: this.state.authToken,
             chromeUser: this.state.chromeUser,
@@ -69,11 +71,12 @@ class SignIn extends Component {
 
         let request = {
             method: 'POST',
-            url: 'http://54.200.181.243/api/user',
+            // url: 'http://54.200.181.243/api/users',
+            url: 'http://54.200.181.243/api/users/sign-in-or-sign-up',
             data: {
                 name: gplusProfile.displayName,
                 email: gplusProfile.emails[0].value,
-                password: gplusProfile.id, // convenirntly using gplus ID as password due to issues with the api design
+                password: gplusProfile.id, // conveniently using gplus ID as password due to issues with the api design
                 password_confirmation: gplusProfile.id,
             },
         }
@@ -83,16 +86,20 @@ class SignIn extends Component {
                 console.log('SUCCESS');
                 // console.log(data, status, xhr);
                 console.log(data);
+
+                this.props.authenticationActions.setShopbuddyAPIProperties({
+                    token: data.token,
+                    expiry: moment().add(1, 'hour'), // assumed the token to expire after one hour
+                    user: data.currentUser,
+                });
             })
             .fail((xhr, status, error) => {
                 console.log('ERROR');
                 console.log(xhr, status, error);
-                // console.log(error);
 
                 let responseObject = xhr.responseJSON;
 
-                // let responseObject = JSON.parse(xhr.responseText);
-                // console.log(responseObject);
+                // TODO: handle the error appropriately
             });
     }
 
