@@ -1,3 +1,8 @@
+// AMAZON_PUBLIC_KEY=AKIAIX4VTDIKSWDU3RCA
+// AMAZON_SECRET_KEY=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
+// PESAPAL_CONSUMER_KEY=2WVcrLQku/h1dgOU0oTUOgTjGYq+Zity
+// PESAPAL_CONSUMER_SECRET=sJBZc7yFNon6a1YQfTaXL9IwKUg=
+
 var moment = require('moment');
 
 var currencyConverter = require('./currencyConverter');
