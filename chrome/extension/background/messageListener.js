@@ -7,6 +7,10 @@ var moment = require('moment');
 
 var currencyConverter = require('./currencyConverter');
 
+var apa = require('./apa-client');
+
+
+
 /**
  * listen to messages from the content script and respond appropriately
  * @param {callback function with params} (request, sender, sendResponse
@@ -21,6 +25,26 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.action) {
         case 'LOOK_UP_AMAZON_ITEMS':
             console.log(request);
+
+            // Create a client
+            var client = apa.createClient({
+                "awsAccessKeyId" : "AKIAIX4VTDIKSWDU3RCA", // your aws access key id here
+                "awsSecretKey" : "ReQt6CWiC2ediNGTzOHNQHb0zsbXZv9Hw1+9gAhT", // your secret key here
+                "associateTag" : "no-tag" // your associate tag here
+            });
+
+            client.execute('ItemSearch',{
+                SearchIndex : 'All',
+                Keywords : 'TV Plasma',
+                ResponseGroup : 'OfferFull,Images,ItemAttributes,SalesRank,EditorialReview',
+                Availability : 'Available'
+            },function(err,data){
+                if(err) {
+                    return console.error(err);
+                }
+                console.log(JSON.stringify(data));
+            });
+
 
             return true;
             break;
