@@ -29,14 +29,14 @@ class CartItem extends Component {
             <ListItem
                 onTouchTap={this.onCartItemTouchTap.bind(this)}
                 primaryText={<div style={{ width: '87%' }}>{this.props.cartItem.title}</div>}
-                secondaryText={`${cartItem.quantity} x ${accounting.formatMoney(cartItem.price, {symbol: '', format: "%s %v" })}`}
+                secondaryText={`${cartItem.quantity} x ${accounting.formatMoney(cartItem.pricing.convertedTotalCost, {symbol: '', format: "%s %v" })}`}
                 leftAvatar={<Avatar src={cartItem.imageUrl} />}
                 rightAvatar={
                     <Avatar
                         color={primaryColor} backgroundColor={transparent}
                         style={{ right: 8, width: 90 }}
                     >
-                        {`${accounting.formatMoney(Number(cartItem.quantity * cartItem.price), { symbol: "",  format: "%s %v" })}`}
+                        {`${accounting.formatMoney(Number(cartItem.quantity * cartItem.pricing.convertedTotalCost), { symbol: "",  format: "%s %v" })}`}
                     </Avatar>
                 }
             />

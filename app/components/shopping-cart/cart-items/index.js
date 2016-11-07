@@ -33,7 +33,7 @@ class CartItems extends Component {
     _calculateTotal(cartItems) {
         let total = 0;
         cartItems.forEach((cartItem) => {
-            total += cartItem.quantity * cartItem.price;
+            total += cartItem.quantity * cartItem.pricing.convertedTotalCost;
         });
 
         return total;
