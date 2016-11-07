@@ -6,6 +6,7 @@
 var moment = require('moment');
 
 var currencyConverter = require('./currencyConverter');
+var getPricing = require('./pricing');
 
 var apa = require('./apa-client');
 
@@ -25,6 +26,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.action) {
         case 'LOOK_UP_AMAZON_ITEMS':
             console.log(request);
+            // only take the first 10 items due to amazon API limitations
+            const pricingItems = request.items.slice(0, 10);
+            let itemIds = [];
+            pricingItems.forEach((item, i) => {
+                itemIds.push(item.asin);
+            });
 
             // Create a client
             var client = apa.createClient({
@@ -33,16 +40,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 "associateTag" : "no-tag" // your associate tag here
             });
 
-            client.execute('ItemSearch',{
-                SearchIndex : 'All',
-                Keywords : 'TV Plasma',
-                ResponseGroup : 'OfferFull,Images,ItemAttributes,SalesRank,EditorialReview',
-                Availability : 'Available'
+            client.execute('ItemLookup',{
+                ItemId: itemIds.toString(),
+                ResponseGroup: 'ItemAttributes',
             },function(err,data){
                 if(err) {
                     return console.error(err);
                 }
-                console.log(JSON.stringify(data));
+                const aggregatedPricingItems = pricingItems.map((item, i) => {
+                    let amazonEquivalent = data.Items.Item.find((amazonItem) => {
+                        return amazonItem.ASIN === item.asin;
+                    });
+                    return Object.assign({}, amazonEquivalent, item);
+                });
+
+                const pricedItems = getPricing(aggregatedPricingItems, request.exchangeRate);
+                sendResponse(pricedItems);
             });
 
 
