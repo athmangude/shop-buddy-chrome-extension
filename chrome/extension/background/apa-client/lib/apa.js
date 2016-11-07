@@ -17,7 +17,10 @@ var http = require('http'),
 	utils = require('./utils');
 
 // Parser
-var parser = new xml2js.Parser();
+var parser = new xml2js.Parser({
+	attrkey: 'attribute',
+	charkey: 'value',
+});
 
 /**
  * Factory to create `Client`
@@ -81,7 +84,6 @@ Client.prototype.execute = function(operation,parameters,callback){
 	};
 
 	var request = http.get(options,function(res){
-		console.log(options);
 		var body = '';
 		res.on('data',function(chunk){
 			body += chunk;
@@ -107,11 +109,6 @@ Client.prototype.execute = function(operation,parameters,callback){
 	request.on('error',function(err){
 		callback(err);
 	});
-
-	// $.ajax({
-	// 	method: 'GET',
-	// 	url: options.protocol+
-	// })
 	return request;
 }
 
