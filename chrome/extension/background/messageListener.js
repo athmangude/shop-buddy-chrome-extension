@@ -25,7 +25,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // check the action on teh request object
     switch (request.action) {
         case 'LOOK_UP_AMAZON_ITEMS':
-            console.log(request);
             // only take the first 10 items due to amazon API limitations
             const pricingItems = request.items.slice(0, 10);
             let itemIds = [];
