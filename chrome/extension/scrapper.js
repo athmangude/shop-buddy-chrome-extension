@@ -11,6 +11,7 @@ export const scrapStoreCheckoutPage = (host, exchangeRate) => {
             title: $(cartItemNode).find(storeConfig.productTitle).text().replace(/(\r\n|\n|\r)/gm,""),
             productLink: `https://www.amazon.com${$(cartItemNode).find(storeConfig.productLink).attr('href')}`,
             price: exchangeRate * parseFloat(cartItemNode.dataset.price),
+            rawPrice: parseFloat(cartItemNode.dataset.price),
             quantity: cartItemNode.dataset.quantity,
             asin: cartItemNode.dataset.asin,
             outOfStock: cartItemNode.dataset.outofstock,
