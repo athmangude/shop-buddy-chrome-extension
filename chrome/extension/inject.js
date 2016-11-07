@@ -157,14 +157,10 @@ window.addEventListener('message', (event) => {
       chrome.runtime.sendMessage({action: "GET_DOLLAR_EXCHANGE_RATE"}, function(response) {
         let exchangeRate = response.rate;
         let cartItems = scrapStoreCheckoutPage(window.location.domain, exchangeRate);
-        console.log(cartItems);
         // TODO: get items from amazon using ASIN code
-        chrome.runtime.sendMessage({ action: "LOOK_UP_AMAZON_ITEMS", items: cartItems }, function(response) {
-          console.log(response);
+        chrome.runtime.sendMessage({ action: "LOOK_UP_AMAZON_ITEMS", items: cartItems, exchangeRate: exchangeRate }, function(response) {
+          event.source.postMessage({items: response}, 'chrome-extension://'+chrome.runtime.id);
         });
-        // TODO: calculate pricing
-        event.source.postMessage({items: cartItems}, 'chrome-extension://'+chrome.runtime.id);
-        // shopbuddyIframe.contentWindow.postMessage({items: ['item1', 'item2']}, 'chrome-extension://ghbhjbimmkdgmdmjmbnepgpkpadolfok');
       });
     }
   }
