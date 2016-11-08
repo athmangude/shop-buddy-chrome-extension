@@ -31,7 +31,6 @@ import firebaseAppInit from '../utils/firebase';
   })
 )
 export default class App extends Component {
-
   static propTypes = {
     cartItems: PropTypes.array.isRequired,
     cartActions: PropTypes.object.isRequired
@@ -101,18 +100,22 @@ export default class App extends Component {
                 this.props.cartActions.addCartItem(cartItem);
               });
             } else {
-              // check if the cart items in the are the same as the current cart items
-              if (JSON.stringify(this.props.cartItems) !== JSON.stringify(cartItems)) {
-                // store items and scrapped items don't match
-                // find missing items and put them in store
-                let missingItems = _.differenceBy(cartItems, this.props.cartItems, 'asin');
-
-                if (missingItems.length) {
-                  missingItems.forEach((cartItem) => {
-                    this.props.cartActions.addCartItem(cartItem);
-                  });
-                }
-              }
+              this.props.cartActions.emptyCart();
+              cartItems.forEach((cartItem) => {
+                this.props.cartActions.addCartItem(cartItem);
+              });
+              // // check if the cart items in the redux store are the same as the current cart items
+              // if (JSON.stringify(this.props.cartItems) !== JSON.stringify(cartItems)) {
+              //   // store items and scrapped items don't match
+              //   // find missing items and put them in store
+              //   let missingItems = _.differenceBy(cartItems, this.props.cartItems, 'asin');
+              //
+              //   if (missingItems.length) {
+              //     missingItems.forEach((cartItem) => {
+              //       this.props.cartActions.addCartItem(cartItem);
+              //     });
+              //   }
+              // }
             }
 
             // check for out of stock items and remove them with nofications to the user
