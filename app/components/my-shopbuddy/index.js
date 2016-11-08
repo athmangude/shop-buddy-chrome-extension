@@ -77,7 +77,7 @@ class MyShopbuddy extends Component {
                     <h4 style={styles.line}>You have {`${this.props.cartItems.length}`} items in your cart</h4>
                     {lastSuccessfulCheckout}
                 </div>
-                <Footer />
+                <Footer authentication={this.props.authentication} />
             </div>
         )
     }
