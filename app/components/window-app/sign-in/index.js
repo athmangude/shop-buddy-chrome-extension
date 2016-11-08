@@ -55,7 +55,7 @@ class SignIn extends Component {
     }
 
     onStartShoppingClicked() {
-      return console.log('onStartShoppingClicked', this.state);
+      // return console.log('onStartShoppingClicked', this.state);
       this.props.authenticationActions.endSigningIn({
           authToken: this.state.authToken,
           chromeUser: this.state.chromeUser,

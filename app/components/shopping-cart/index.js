@@ -8,12 +8,12 @@ class ShoppingCart extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <Header rightIcon='close' />
-                <CartItems { ...this.props } />
-            </div>
-        );
+      return (
+        <div>
+          <Header rightIcon='close' />
+          <CartItems { ...this.props } />
+        </div>
+      );
     }
 }
 
