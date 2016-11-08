@@ -30,12 +30,16 @@ function getPricing(batch, exchangeRate) {
 
 function getVolumetricWeight(item) {
   // DHL vw = l X w X h / 5000 (kg) // rounded up to the nearest 0.5 kg
-  const packageDimensions = item.ItemAttributes.PackageDimensions;
-  const height = (Number(packageDimensions.Height.value) / 100) * 2.54;
-  const width = (Number(packageDimensions.Width.value) / 100) * 2.54;
-  const length = (Number(packageDimensions.Length.value) / 100) * 2.54;
+  if (item.packageDimensions) {
+    const packageDimensions = item.ItemAttributes.PackageDimensions;
+    const height = (Number(packageDimensions.Height.value) / 100) * 2.54;
+    const width = (Number(packageDimensions.Width.value) / 100) * 2.54;
+    const length = (Number(packageDimensions.Length.value) / 100) * 2.54;
 
-  return (length * width * height) / 5000
+    return (length * width * height) / 5000
+  } else {
+    return 0;
+  }
 }
 
 module.exports = getPricing;
