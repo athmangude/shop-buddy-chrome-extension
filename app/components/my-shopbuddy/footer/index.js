@@ -25,7 +25,7 @@ class Footer extends Component {
     closeWindowIfExists() {
         if (windowId > 0) {
             chrome.windows.remove(windowId);
-            windowId = chrome.windows.WINDOW_ID_NONE;
+            const windowId = chrome.windows.WINDOW_ID_NONE;
         }
     }
 
@@ -40,7 +40,7 @@ class Footer extends Component {
         // if (type === 'open') {
         options.url = 'window.html';
         chrome.windows.create(options, (win) => {
-            windowId = win.id;
+            const windowId = win.id;
         });
         // }
     }
@@ -48,7 +48,14 @@ class Footer extends Component {
     render() {
         return (
             <div style={styles.centeringFlexBox}>
-                <RaisedButton secondary={true} label="View Transaction History" fullWidth={true} onTouchTap={this.onViewTransactionHistoryTouchTapped.bind(this)} style={styles.fullWidthButton} />
+                <RaisedButton
+                    secondary={this.props.authentication.isSignedIn}
+                    primary={!this.props.authentication.isSignedIn}
+                    label={this.props.authentication.isSignedIn ? 'View Transaction History' : 'Sign In to View Transaction History'}
+                    fullWidth={true}
+                    onTouchTap={this.onViewTransactionHistoryTouchTapped.bind(this)}
+                    style={styles.fullWidthButton}
+                />
             </div>
         );
     }
