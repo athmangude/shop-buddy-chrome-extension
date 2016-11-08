@@ -52,7 +52,6 @@ class Footer extends Component {
     }
 
     render() {
-      console.log(this.props);
       return (
         <div style={{
           display: 'flex',
