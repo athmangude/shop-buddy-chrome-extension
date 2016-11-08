@@ -36,24 +36,24 @@ class Footer extends Component {
     }
 
     render() {
-        return (
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column'
-            }}>
-                <Paper zDepth={0}>
-                    <h1 style={{ fontWeight: 'normal' }}>{`${accounting.formatMoney(this.props.total, { symbol: 'KES', format: '%s %v' })}`}/-</h1>
-                </Paper>
-                <Checkout { ...this.props } />
-                <RaisedButton
-                    onTouchTap={this.onShopbuddyCheckout.bind(this)}
-                    label="Checkout with Shopbuddy"
-                    secondary={true}
-                    style={style} />
-            </div>
-        );
+      return (
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column'
+        }}>
+          <Paper zDepth={0}>
+            <h1 style={{ fontWeight: 'normal' }}>{`${accounting.formatMoney(this.props.total, { symbol: 'KES', format: '%s %v' })}`}/-</h1>
+          </Paper>
+          <Checkout { ...this.props } />
+          <RaisedButton
+            onTouchTap={this.onShopbuddyCheckout.bind(this)}
+            label="Checkout with Shopbuddy"
+            secondary={true}
+            style={style} />
+        </div>
+      );
     }
 }
 
