@@ -69,7 +69,8 @@ export default class App extends Component {
 
       // initialize database stores
       this.firebaseDatabaseRefs = {
-        menu: this.firebaseApp.database().ref().child('menu'),
+        users: this.firebaseApp.database().ref().child('users'),
+        orders: this.firebaseApp.database().ref().child('orders'),
       };
 
       // initialize file storage
@@ -146,7 +147,9 @@ export default class App extends Component {
     this.setupFirebase();
 
     // initiate fetching firebase data
-    this.listenOnceForItems('menu', this.firebaseDatabaseRefs.menu);
+    if (this.props.authentication.isSigned) {
+      this.listenOnceForItems('orders', this.firebaseDatabaseRefs.orders);
+    }
   }
 
   render() {
