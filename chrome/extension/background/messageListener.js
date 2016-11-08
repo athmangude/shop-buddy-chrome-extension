@@ -26,8 +26,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.action) {
         case 'LOOK_UP_AMAZON_ITEMS':
             // only take the first 10 items due to amazon API limitations
-            const pricingItems = request.items.slice(0, 10);
-            let itemIds = [];
+            var pricingItems = request.items.slice(0, 10);
+            var itemIds = [];
             pricingItems.forEach((item, i) => {
                 itemIds.push(item.asin);
             });
@@ -42,18 +42,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             client.execute('ItemLookup',{
                 ItemId: itemIds.toString(),
                 ResponseGroup: 'ItemAttributes',
-            },function(err,data){
+            }, function(err, data){
                 if(err) {
                     return console.error(err);
                 }
-                const aggregatedPricingItems = pricingItems.map((item, i) => {
-                    let amazonEquivalent = data.Items.Item.find((amazonItem) => {
+
+                var aggregatedPricingItems = pricingItems.map((item, i) => {
+                    var amazonEquivalent = data.Items.Item.find((amazonItem) => {
                         return amazonItem.ASIN === item.asin;
                     });
                     return Object.assign({}, amazonEquivalent, item);
                 });
 
-                const pricedItems = getPricing(aggregatedPricingItems, request.exchangeRate);
+                var pricedItems = getPricing(aggregatedPricingItems, request.exchangeRate);
                 sendResponse(pricedItems);
             });
 
