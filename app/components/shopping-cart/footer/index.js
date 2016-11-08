@@ -21,6 +21,9 @@ class Footer extends Component {
             cartItemsSent: false,
             checkingOutComplete: false,
         }
+
+        this.onSignIn = this.onSignIn.bind(this);
+        this.onShopbuddyCheckout = this.onShopbuddyCheckout.bind(this);
     }
 
     onShopbuddyCheckout() {
@@ -31,11 +34,25 @@ class Footer extends Component {
         setTimeout( () => {
             this.props.appActions.receiveCartSendingResponse();
         }, 3000);
+    }
 
+    onSignIn() {
+        const options = {
+            type: 'popup',
+            left: 100, top: 100,
+            width: 800, height: 475
+        };
 
+        // if (type === 'open') {
+        options.url = 'window.html';
+        chrome.windows.create(options, (win) => {
+            const windowId = win.id;
+        });
+        // }
     }
 
     render() {
+      console.log(this.props);
       return (
         <div style={{
           display: 'flex',
@@ -48,9 +65,10 @@ class Footer extends Component {
           </Paper>
           <Checkout { ...this.props } />
           <RaisedButton
-            onTouchTap={this.onShopbuddyCheckout.bind(this)}
-            label="Checkout with Shopbuddy"
-            secondary={true}
+            onTouchTap={this.props.authentication.isSignedIn ? this.onShopbuddyCheckout : this.onSignIn}
+            label={this.props.authentication.isSignedIn ? 'Checkout with Shopbuddy' : 'Sign In to Checkout With Shopbuddy'}
+            secondary={this.props.authentication.isSignedIn}
+            primary={!this.props.authentication.isSignedIn}
             style={style} />
         </div>
       );
