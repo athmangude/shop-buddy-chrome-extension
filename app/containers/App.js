@@ -15,6 +15,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import appTheme from '../appTheme.js';
 
+import firebaseAppInit from '../utils/firebase';
+
 
 @connect(
   state => ({
@@ -37,6 +39,46 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  listenOnceForItems(itemName, itemFirebaseRef) {
+    switch (itemName) {
+      case 'menu':
+        itemFirebaseRef.once('value', (snap) => {
+          const items = [];
+          snap.forEach((child) => {
+            items.push(Object.assign(child.val(), { _key: child.key }));
+          });
+
+          console.log(items);
+
+          // // delete existing categories and replace them with new ones
+          // this.props.categoryActions.deleteCategories();
+          // this.props.categoryActions.addCategories(items);
+        });
+        break;
+      default:
+        // console.log('default case running');
+    }
+  }
+
+  setupFirebase() {
+    try {
+      // Initialize Firebase
+      this.firebaseApp = firebaseAppInit();
+
+      // initialize database stores
+      this.firebaseDatabaseRefs = {
+        menu: this.firebaseApp.database().ref().child('menu'),
+      };
+
+      // initialize file storage
+      this.firebaseFileStorageRefs = {
+        products: this.firebaseApp.storage().ref().child('menu/images'),
+      };
+    } catch (e) {
+      window.location.reload();
+    }
   }
 
   componentDidMount() {
@@ -98,6 +140,13 @@ export default class App extends Component {
           }
         }
       });
+  }
+
+  componentWillMount() {
+    this.setupFirebase();
+
+    // initiate fetching firebase data
+    this.listenOnceForItems('menu', this.firebaseDatabaseRefs.menu);
   }
 
   render() {
