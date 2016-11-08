@@ -38,6 +38,7 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
+    this.setupFirebase();
   }
 
   listenOnceForItems(itemName, itemFirebaseRef) {
@@ -147,8 +148,6 @@ export default class App extends Component {
   }
 
   componentWillMount() {
-    this.setupFirebase();
-
     // initiate fetching firebase data
     if (this.props.authentication.isSigned) {
       this.listenOnceForItems('orders', this.firebaseDatabaseRefs.orders);
@@ -156,20 +155,25 @@ export default class App extends Component {
   }
 
   render() {
+    const firebaseRefs = {
+      database: this.firebaseDatabaseRefs,
+      fileStorage: this.firebaseFileStorageRefs,
+    };
+
     const { cartActions, appActions, app } = this.props;
     let component;
     switch (window.location.pathname) {
       case '/inject/html':
-        component = <ShoppingCart { ...this.props } />
+        component = <ShoppingCart { ...this.props } firebaseRefs={firebaseRefs} />
         break;
       case '/popup.html':
-        component = <MyShopbuddy { ...this.props } />
+        component = <MyShopbuddy { ...this.props } firebaseRefs={firebaseRefs} />
         break;
       case '/window.html':
-        component = <WindowApp { ...this.props } />
+        component = <WindowApp { ...this.props } firebaseRefs={firebaseRefs} />
         break;
       default:
-        component = <ShoppingCart { ...this.props } />
+        component = <ShoppingCart { ...this.props } firebaseRefs={firebaseRefs} />
     }
 
 
