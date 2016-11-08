@@ -33,15 +33,17 @@ const styles = {
 
 class SignIn extends Component {
     constructor(props) {
-        super(props);
+      super(props);
 
-        this.state = {
-            authToken: null,
-            chromeUser: null,
-            gplusProfile: null,
-            googleAPIsReady: false,
-            snackbarOpen: false,
-        }
+      this.state = {
+        authToken: null,
+        chromeUser: null,
+        gplusProfile: null,
+        googleAPIsReady: false,
+        snackbarOpen: false,
+      }
+
+      this.onStartShoppingClicked = this.onStartShoppingClicked.bind(this);
     }
 
     authorize(params, callback) {
@@ -55,11 +57,25 @@ class SignIn extends Component {
     }
 
     onStartShoppingClicked() {
-      // return console.log('onStartShoppingClicked', this.state);
-      this.props.authenticationActions.endSigningIn({
-          authToken: this.state.authToken,
-          chromeUser: this.state.chromeUser,
-          gplusProfile: this.state.gplusProfile,
+      this.props.firebaseRefs.database.users.child(this.state.chromeUser.id).once('value', (snap) => {
+          if (!snap.val()) {
+            // the user does not exist, add them
+            this.props.firebaseRefs.database.users.child(this.state.chromeUser.id).set(this.state.gplusProfile, (error) => {
+              if (!error) {
+                this.props.authenticationActions.endSigningIn({
+                  authToken: this.state.authToken,
+                  chromeUser: this.state.chromeUser,
+                  gplusProfile: this.state.gplusProfile,
+                });
+              }
+            });
+          } else {
+            this.props.authenticationActions.endSigningIn({
+              authToken: this.state.authToken,
+              chromeUser: this.state.chromeUser,
+              gplusProfile: this.state.gplusProfile,
+            });
+          }
       });
     }
 
@@ -148,7 +164,7 @@ class SignIn extends Component {
         let actionButton;
 
         if (this.state.googleAPIsReady) {
-            this.state.gplusProfile ? actionButton =  <RaisedButton label="Start Shopping" secondary={true} onTouchTap={this.onStartShoppingClicked.bind(this)} icon={<ShoppingBasket />} /> : actionButton =  <RaisedButton label="SignIn with Google" disabled={!this.state.googleAPIsReady} onTouchTap={this.onSignInClicked.bind(this)} icon={<FontIcon className="fa fa-google" style={styles.googleIcon} />} />;
+            this.state.gplusProfile ? actionButton =  <RaisedButton label="Start Shopping" secondary={true} onTouchTap={this.onStartShoppingClicked} icon={<ShoppingBasket />} /> : actionButton =  <RaisedButton label="SignIn with Google" disabled={!this.state.googleAPIsReady} onTouchTap={this.onSignInClicked.bind(this)} icon={<FontIcon className="fa fa-google" style={styles.googleIcon} />} />;
         } else {
             actionButton =  <div style={styles.googleAPIsWaitingMessageContainer}>
                                 <CircularProgress size={0.5} color={accent1Color} />
