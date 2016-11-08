@@ -55,45 +55,12 @@ class SignIn extends Component {
     }
 
     onStartShoppingClicked() {
-        this.props.authenticationActions.endSigningIn({
-            authToken: this.state.authToken,
-            chromeUser: this.state.chromeUser,
-            gplusProfile: this.state.gplusProfile,
-        });
-
-        this.authenticateWithShopbuddy(this.state.gplusProfile);
-    }
-
-    authenticateWithShopbuddy(gplusProfile) {
-        console.log(gplusProfile);
-
-        let request = {
-            method: 'POST',
-            url: 'http://54.200.181.243/api/user',
-            data: {
-                name: gplusProfile.displayName,
-                email: gplusProfile.emails[0].value,
-                password: gplusProfile.id, // convenirntly using gplus ID as password due to issues with the api design
-                password_confirmation: gplusProfile.id,
-            },
-        }
-
-        $.ajax(request)
-            .done((data, status, xhr) => {
-                console.log('SUCCESS');
-                // console.log(data, status, xhr);
-                console.log(data);
-            })
-            .fail((xhr, status, error) => {
-                console.log('ERROR');
-                console.log(xhr, status, error);
-                // console.log(error);
-
-                let responseObject = xhr.responseJSON;
-
-                // let responseObject = JSON.parse(xhr.responseText);
-                // console.log(responseObject);
-            });
+      return console.log('onStartShoppingClicked', this.state);
+      this.props.authenticationActions.endSigningIn({
+          authToken: this.state.authToken,
+          chromeUser: this.state.chromeUser,
+          gplusProfile: this.state.gplusProfile,
+      });
     }
 
     onSignInClicked() {
