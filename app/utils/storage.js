@@ -5,6 +5,7 @@ function saveState(state) {
 // todos unmarked count
 function setBadge(cartItems) {
   if (chrome.browserAction) {
+    chrome.browserAction.setBadgeBackgroundColor({color: '#11161d'});
     chrome.browserAction.setBadgeText({ text: cartItems.length.toString()});
   }
 }
