@@ -1,5 +1,5 @@
 {
-  "version": "0.3.2",
+  "version": "0.4.0",
   "name": "Shopbuddy",
   "manifest_version": 2,
   "description": "You shop, we deliver",
@@ -8,9 +8,9 @@
     "default_popup": "popup.html"
   },
   "icons": {
-    "16": "img/icon-16.png",
-    "48": "img/icon-48.png",
-    "128": "img/icon-128.png"
+    "16": "img/logo-16.png",
+    "48": "img/logo-48.png",
+    "128": "img/logo-128.png"
   },
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn4Lj2KONeW5GF1BpYUlBXc32x39kXkKLBGvpptohoNZYKrbQu+HBGuAJ1XdCxKzBgFrLQVqb6s4y03bpAoAYCEE8mB1vLXgEB6UfbKuik9fQ08d5iKzxrmqiimC0MMwzfkZHNwbmYw2b/eo/pqDUoDUnSZAyXiz3CoFUgcvSgzFqfXf2jL8Zj6FF0YDzvxaPNudxsI7JIcZRtv1y1DhD6wA+BD6Je2aU9UBQWnxsZ9mKnbCcidfnrxzFuGAKpoaNMpz0pqfv3/DhxmD2DIUuMhbqbTZj+6jUPVafu0B8X727BeBnmXChoAKy4YdTlkFx0gX5DfTXUXXMODH0m9+AawIDAQAB",
   "web_accessible_resources": [
