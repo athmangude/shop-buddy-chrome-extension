@@ -177,7 +177,7 @@ class SignIn extends Component {
         return (
             <div style={styles.container}>
                 <Avatar
-                    src={this.state.gplusProfile ? this.state.gplusProfile.image.url : 'chrome-extension://jllbjccoodgjljdmpijpmkhmdkndamho/img/icon-128.png'}
+                    src={this.state.gplusProfile ? this.state.gplusProfile.image.url : 'chrome-extension://jllbjccoodgjljdmpijpmkhmdkndamho/img/logo-128.png'}
                     size={130}
                 />
                 <h5>{this.state.gplusProfile ? `You will be logged in as ${this.state.gplusProfile.name.givenName}` : `Sign in to start using Shopbuddy`}</h5>
