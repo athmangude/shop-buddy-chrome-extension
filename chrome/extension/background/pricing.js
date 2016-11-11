@@ -6,19 +6,19 @@ function getPricing(batch, exchangeRate) {
     }
 
     if (item.rawPrice >= 0 && item.rawPrice < 100) {
-      item.pricing.totalCost = ((volumetricWeight * 10) + (item.rawPrice)) * 1.3;
+      item.pricing.totalCost = ((volumetricWeight * 10) + (item.rawPrice)) * 1.27;
       item.pricing.convertedTotalCost = item.pricing.totalCost * exchangeRate;
     } else if (item.rawPrice >= 100 && item.rawPrice < 250) {
-      item.pricing.totalCost = ((volumetricWeight * 10) + (item.rawPrice)) * 1.25;
+      item.pricing.totalCost = ((volumetricWeight * 10) + (item.rawPrice)) * 1.22;
       item.pricing.convertedTotalCost = item.pricing.totalCost * exchangeRate;
     } else if (item.rawPrice >= 250 && item.rawPrice < 500) {
-      item.pricing.totalCost = ((volumetricWeight * 10) + (item.rawPrice)) * 1.2;
+      item.pricing.totalCost = ((volumetricWeight * 10) + (item.rawPrice)) * 1.17;
       item.pricing.convertedTotalCost = item.pricing.totalCost * exchangeRate;
     } else if (item.rawPrice >= 500 && item.rawPrice < 700) {
-      item.pricing.totalCost = ((volumetricWeight * 10) + (item.rawPrice)) * 1.15;
+      item.pricing.totalCost = ((volumetricWeight * 10) + (item.rawPrice)) * 1.12;
       item.pricing.convertedTotalCost = item.pricing.totalCost * exchangeRate;
     } else if (item.rawPrice > 700) {
-      item.pricing.totalCost = ((volumetricWeight * 10) + (item.rawPrice)) * 1.10;
+      item.pricing.totalCost = ((volumetricWeight * 10) + (item.rawPrice)) * 1.07;
       item.pricing.convertedTotalCost = item.pricing.totalCost * exchangeRate;
     }
 
@@ -29,14 +29,13 @@ function getPricing(batch, exchangeRate) {
 }
 
 function getVolumetricWeight(item) {
-  // DHL vw = l X w X h / 5000 (kg) // rounded up to the nearest 0.5 kg
-  if (item.packageDimensions) {
+  if (item.ItemAttributes.PackageDimensions) {
     const packageDimensions = item.ItemAttributes.PackageDimensions;
     const height = (Number(packageDimensions.Height.value) / 100) * 2.54;
     const width = (Number(packageDimensions.Width.value) / 100) * 2.54;
     const length = (Number(packageDimensions.Length.value) / 100) * 2.54;
 
-    return (length * width * height) / 5000
+    return (length * width * height) / 6000
   } else {
     return 0;
   }
