@@ -117,7 +117,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     } else {
                         sendResponse({
                             action: 'GET_DOLLAR_EXCHANGE_RATE',
-                            rate: results.usdExchangeRate.rate,
+                            rate: parseFloat(results.usdExchangeRate.rate) + 3.5,
                         });
                     }
                 }
