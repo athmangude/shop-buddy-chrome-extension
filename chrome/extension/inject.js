@@ -109,10 +109,8 @@ class InjectApp extends Component {
         <div>
           <CheckoutReminder isDialogVisible={isDialogVisible} />
         </div>
-
       )
     }
-
   }
 }
 
