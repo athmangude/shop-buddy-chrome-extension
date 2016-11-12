@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Paper, RaisedButton } from 'material-ui';
 import accounting from 'accounting';
+import uuid from 'uuid';
+import moment from 'moment';
 
 import Checkout from './checkout';
 
@@ -31,9 +33,20 @@ class Footer extends Component {
 
         this.props.appActions.sendCart();
 
-        setTimeout( () => {
-            this.props.appActions.receiveCartSendingResponse();
-        }, 3000);
+        const cartId = uuid.v1().replace(/[^a-zA-Z0-9]/g, '');
+
+        this.props.firebaseRefs.database.orders.child(cartId).set({
+            cartItems: this.props.cartItems,
+            total: this.props.total.toFixed(2),
+            user: this.props.authentication.signedInUser.gplusProfile,
+            dateTime: moment().format(),
+        }, (error) => {
+            if(!error) {
+                this.props.appActions.receiveCartSendingResponseNoError();
+            } else {
+                this.props.appActions.receiveCartSendingResponseWithError();
+            }
+        });
     }
 
     onSignIn() {
@@ -49,6 +62,10 @@ class Footer extends Component {
             const windowId = win.id;
         });
         // }
+    }
+
+    componentWillMount() {
+        this.props.appActions.resetCheckout();
     }
 
     render() {
