@@ -6,6 +6,7 @@ const initialState = {
     isSendingCart: false,
     isCartSendingResponseReceived: false,
     lastSuccessfulCheckout: false,
+    checkoutError: false,
 };
 
 const actionsMap = {
@@ -15,14 +16,20 @@ const actionsMap = {
   [AppActionTypes.SEND_CART](state, action) {
     return Object.assign({}, state, { isSendingCart: true, isCartSendingResponseReceived: false, });
   },
-  [AppActionTypes.RECEIVE_CART_SENDING_RESPONSE](state, action) {
-    return Object.assign({}, state, { isSendingCart: false, isCartSendingResponseReceived: true, });
+  [AppActionTypes.RECEIVE_CART_SENDING_RESPONSE_NO_ERROR](state, action) {
+    return Object.assign({}, state, { isSendingCart: false, isCartSendingResponseReceived: true, checkoutError: false });
+  },
+  [AppActionTypes.RECEIVE_CART_SENDING_RESPONSE_WITH_ERROR](state, action) {
+    return Object.assign({}, state, { isSendingCart: false, isCartSendingResponseReceived: true, checkoutError: true });
   },
   [AppActionTypes.CANCEL_CHECKOUT](state, action) {
-    return Object.assign({}, state, { isCheckingOut: false, isSendingCart: false, isCartSendingResponseReceived: false, isCheckoutComplete: false, isCheckoutComplete: false, })
+    return Object.assign({}, state, { isCheckingOut: false, isSendingCart: false, isCartSendingResponseReceived: false, isCheckoutComplete: false, isCheckoutComplete: false, });
   },
   [AppActionTypes.END_CHECKOUT](state, action) {
-    return Object.assign({}, state, { isCheckingOut: false, isCheckoutComplete: true, lastSuccessfulCheckout: new Date(), })
+    return Object.assign({}, state, { isCheckingOut: false, isCheckoutComplete: true, lastSuccessfulCheckout: new Date(), });
+  },
+  [AppActionTypes.RESET_CHECKOUT](state, action) {
+    return Object.assign({}, state, { isCheckingOut: false, isCheckoutComplete: false, isSendingCart: false, isCartSendingResponseReceived: false, lastSuccessfulCheckout: false, checkoutError: false, });
   },
 };
 
