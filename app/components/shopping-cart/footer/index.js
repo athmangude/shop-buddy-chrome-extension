@@ -22,6 +22,7 @@ class Footer extends Component {
             isCheckingOut: false,
             cartItemsSent: false,
             checkingOutComplete: false,
+            cartId: null,
         }
 
         this.onSignIn = this.onSignIn.bind(this);
@@ -34,18 +35,21 @@ class Footer extends Component {
         this.props.appActions.sendCart();
 
         const cartId = uuid.v1().replace(/[^a-zA-Z0-9]/g, '');
-
-        this.props.firebaseRefs.database.orders.child(cartId).set({
-            cartItems: this.props.cartItems,
-            total: this.props.total.toFixed(2),
-            user: this.props.authentication.signedInUser.gplusProfile,
-            dateTime: moment().format(),
-        }, (error) => {
-            if(!error) {
-                this.props.appActions.receiveCartSendingResponseNoError();
-            } else {
-                this.props.appActions.receiveCartSendingResponseWithError();
-            }
+        this.setState({
+            cartId: cartId,
+        }, () => {
+            this.props.firebaseRefs.database.carts.child(cartId).set({
+                cartItems: this.props.cartItems,
+                total: this.props.total.toFixed(2),
+                user: this.props.authentication.signedInUser.gplusProfile,
+                dateTime: moment().format(),
+            }, (error) => {
+                if(!error) {
+                    this.props.appActions.receiveCartSendingResponseNoError();
+                } else {
+                    this.props.appActions.receiveCartSendingResponseWithError();
+                }
+            });
         });
     }
 
@@ -79,7 +83,7 @@ class Footer extends Component {
           <Paper zDepth={0}>
             <h1 style={{ fontWeight: 'normal' }}>{`${accounting.formatMoney(this.props.total, { symbol: 'KES', format: '%s %v' })}`}/-</h1>
           </Paper>
-          <Checkout { ...this.props } />
+          <Checkout { ...this.props } cartId={this.state.cartId} />
           <RaisedButton
             onTouchTap={this.props.authentication.isSignedIn ? this.onShopbuddyCheckout : this.onSignIn}
             label={this.props.authentication.isSignedIn ? 'Checkout with Shopbuddy' : 'Sign In to Checkout With Shopbuddy'}
