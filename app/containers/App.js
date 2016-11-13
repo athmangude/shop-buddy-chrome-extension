@@ -70,7 +70,7 @@ export default class App extends Component {
       // initialize database stores
       this.firebaseDatabaseRefs = {
         users: this.firebaseApp.database().ref().child('users'),
-        orders: this.firebaseApp.database().ref().child('orders'),
+        carts: this.firebaseApp.database().ref().child('carts'),
       };
 
       // initialize file storage
