@@ -163,7 +163,7 @@ export default class App extends Component {
     const { cartActions, appActions, app } = this.props;
     let component;
     switch (window.location.pathname) {
-      case '/inject/html':
+      case '/inject.html':
         component = <ShoppingCart { ...this.props } firebaseRefs={firebaseRefs} />
         break;
       case '/popup.html':
