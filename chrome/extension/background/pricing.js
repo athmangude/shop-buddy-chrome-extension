@@ -35,7 +35,15 @@ function getVolumetricWeight(item) {
     const width = (Number(packageDimensions.Width.value) / 100) * 2.54;
     const length = (Number(packageDimensions.Length.value) / 100) * 2.54;
 
-    return (length * width * height) / 6000
+    const volumetricWeight = (length * width * height) / 6000; // (Kgs)
+    const packageWeight = item.ItemAttributes.PackageDimensions.Weight.value * 0.001 * 0.453592; // (Kgs)
+
+    if (packageWeight > volumetricWeight) {
+      // if the package weight is greater than volumtric weight, use package weight
+      return Math.ceil(packageWeight) < 1 ? 1 : Math.ceil(volumetricWeight);
+    }
+
+    return Math.ceil(volumetricWeight) < 1 ? 1 : Math.ceil(volumetricWeight);
   } else {
     return 0;
   }
