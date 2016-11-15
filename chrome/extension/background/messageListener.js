@@ -24,6 +24,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     // check the action on teh request object
     switch (request.action) {
+        case 'OPEN_WINDOW_APP':
+          chrome.windows.create(request.options, (win) => {
+            const windowId = win.id;
+          });
+          return true;
+          break;
         case 'LOOK_UP_AMAZON_ITEMS':
             // only take the first 10 items due to amazon API limitations
             var pricingItems = request.items.slice(0, 10);

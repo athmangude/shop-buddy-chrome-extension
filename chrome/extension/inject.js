@@ -161,5 +161,9 @@ window.addEventListener('message', (event) => {
         });
       });
     }
+
+    if (event.data.action === 'OPEN_WINDOW_APP') {
+      chrome.runtime.sendMessage({ action: 'OPEN_WINDOW_APP', options: event.data.options });
+    }
   }
 });

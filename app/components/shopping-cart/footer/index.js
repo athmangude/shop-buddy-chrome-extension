@@ -57,15 +57,16 @@ class Footer extends Component {
         const options = {
             type: 'popup',
             left: 100, top: 100,
-            width: 800, height: 475
+            width: 800, height: 475,
+            url: 'window.html',
         };
 
-        // if (type === 'open') {
-        options.url = 'window.html';
-        chrome.windows.create(options, (win) => {
-            const windowId = win.id;
-        });
-        // }
+        // // if (type === 'open') {
+        // chrome.windows.create(options, (win) => {
+        //     const windowId = win.id;
+        // });
+        // // }
+        window.parent.postMessage({ action: 'OPEN_WINDOW_APP', options }, '*');
     }
 
     componentWillMount() {
