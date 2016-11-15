@@ -55,6 +55,7 @@
     "tabs",
     "activeTab",
     "storage",
+    "notifications",
     "https://www.amazon.com/*",
     "http://ecs.amazonaws.com/*"
   ],
