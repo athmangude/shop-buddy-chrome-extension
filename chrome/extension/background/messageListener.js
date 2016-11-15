@@ -53,17 +53,24 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     return console.error(err);
                 }
 
-                var aggregatedPricingItems = pricingItems.map((item, i) => {
-                    var amazonEquivalent = data.Items.Item.find((amazonItem) => {
-                        return amazonItem.ASIN === item.asin;
+                if (!Array.isArray(data.Items.Item)) {
+                    var aggregatedPricingItems = [];
+                    var item = Object.assign({}, data.Items.Item, pricingItems[0]);
+                    aggregatedPricingItems[0] = item;
+                    var pricedItems = getPricing(aggregatedPricingItems, request.exchangeRate);
+                    sendResponse(pricedItems);
+                } else {
+                    var aggregatedPricingItems = pricingItems.map((item, i) => {
+                        var amazonEquivalent = data.Items.Item.find((amazonItem) => {
+                            return amazonItem.ASIN === item.asin;
+                        });
+                        return Object.assign({}, amazonEquivalent, item);
                     });
-                    return Object.assign({}, amazonEquivalent, item);
-                });
 
-                var pricedItems = getPricing(aggregatedPricingItems, request.exchangeRate);
-                sendResponse(pricedItems);
+                    var pricedItems = getPricing(aggregatedPricingItems, request.exchangeRate);
+                    sendResponse(pricedItems);
+                }
             });
-
 
             return true;
             break;
