@@ -45,8 +45,9 @@ export default class App extends Component {
   }
 
   listenOnceForItems(itemName, itemFirebaseRef) {
+    console.log('listenOnceForItems');
     switch (itemName) {
-      case 'menu':
+      case 'carts':
         itemFirebaseRef.once('value', (snap) => {
           const items = [];
           snap.forEach((child) => {
@@ -55,9 +56,11 @@ export default class App extends Component {
 
           console.log(items);
 
-          // // delete existing categories and replace them with new ones
-          // this.props.categoryActions.deleteCategories();
-          // this.props.categoryActions.addCategories(items);
+          console.log(this.props);
+
+          // delete existing categories and replace them with new ones
+          this.props.orderActions.deleteOrders();
+          this.props.orderActions.addOrders(items);
         });
         break;
       default:
@@ -151,9 +154,10 @@ export default class App extends Component {
   }
 
   componentWillMount() {
+    console.log(this.props.authentication);
     // initiate fetching firebase data
-    if (this.props.authentication.isSigned) {
-      this.listenOnceForItems('orders', this.firebaseDatabaseRefs.orders);
+    if (this.props.authentication.isSignedIn) {
+      this.listenOnceForItems('carts', this.firebaseDatabaseRefs.carts);
     }
   }
 
