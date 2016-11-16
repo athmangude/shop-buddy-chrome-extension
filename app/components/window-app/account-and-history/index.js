@@ -55,7 +55,7 @@ class AccountAndHistory extends Component {
                <Tab label="Account" value="account" style={styles.tab}>
                      <AccountInfo { ...this.props } />
                </Tab>
-               <Tab label="Transaction History" value="history" style={styles.tab}>
+               <Tab label="Order History" value="history" style={styles.tab}>
                   <TransactionHistory { ...this.props } />
                </Tab>
             </Tabs>
