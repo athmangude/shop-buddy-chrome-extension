@@ -49,8 +49,8 @@ class TransactionHistory extends Component {
       )
     }
 
-    return this.props.orders.map(transaction => (
-      <Transaction />
+    return this.props.orders.map(order => (
+      <Transaction key={order._key} order={order} />
     ));
   }
 
