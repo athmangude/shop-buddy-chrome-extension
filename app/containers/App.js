@@ -9,7 +9,7 @@ import WindowApp from '../components/window-app';
 import * as CartActions from '../actions/cartItems';
 import * as AppActions from '../actions/app';
 import * as AuthenticationActions from '../actions/authentication';
-import * as TransactionActions from '../actions/transactions';
+import * as OrderActions from '../actions/orders';
 
 import _ from 'lodash';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -24,13 +24,13 @@ import firebaseAppInit from '../utils/firebase';
     cartItems: state.cartItems,
     app: state.app,
     authentication: state.authentication,
-    transactions: state.transactions,
+    orders: state.orders,
   }),
   dispatch => ({
     cartActions: bindActionCreators(CartActions, dispatch),
     appActions: bindActionCreators(AppActions, dispatch),
     authenticationActions: bindActionCreators(AuthenticationActions, dispatch),
-    transactionActions: bindActionCreators(TransactionActions, dispatch),
+    orderActions: bindActionCreators(OrderActions, dispatch),
   })
 )
 export default class App extends Component {

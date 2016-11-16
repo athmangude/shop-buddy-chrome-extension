@@ -36,8 +36,8 @@ class TransactionHistory extends Component {
     win.focus();
   }
 
-  renderTransaction() {
-    if(!this.props.transactions.length) {
+  renderOrders() {
+    if(!this.props.orders.length) {
       return (
         <div
           style={Object.assign({}, styles.centeringFlexContainer, {})}
@@ -49,7 +49,7 @@ class TransactionHistory extends Component {
       )
     }
 
-    return this.props.transactions.map(transaction => (
+    return this.props.orders.map(transaction => (
       <Transaction />
     ));
   }
@@ -57,7 +57,7 @@ class TransactionHistory extends Component {
   render() {
     return (
       <div>
-        {this.renderTransaction()}
+        {this.renderOrders()}
       </div>
     );
   }
