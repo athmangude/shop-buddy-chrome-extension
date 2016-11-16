@@ -1,6 +1,6 @@
 {
   "name": "shopbuddy-chrome-extension",
-  "version": "0.5.1",
+  "version": "0.6.1",
   "description": "A chrome extension for Shopbuddy",
   "scripts": {
     "dev": "node scripts/dev",
