@@ -4,8 +4,12 @@ import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Subheader from 'material-ui/Subheader';
 import moment from 'moment';
+import numeral from 'numeral';
+import Chip from 'material-ui/Chip';
+import SvgIconFace from 'material-ui/svg-icons/action/face';
+import FileFolder from 'material-ui/svg-icons/file/folder';
 
-import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import {grey400, blue300} from 'material-ui/styles/colors';
 
 
 class Transaction extends Component {
@@ -13,41 +17,50 @@ class Transaction extends Component {
         super(props);
     }
 
+    renderChip() {
+        if (this.props.order.status) {
+            return (
+                <Chip
+                    size={10} color={blue300}
+                    backgroundColor={grey400}
+                    style={{ margin: '0 5px', textTransform: 'upperCase', display: 'inline-flex', padding: 0, fontSize: 5, height: 20,  }}
+                    labelStyle={{ fontSize: 10, lineHeight: 'inherit', }}
+                >
+                    {this.props.order.status}
+                </Chip>
+            );
+        }
+    }
+
+    renderCartItems() {
+        return this.props.order.cartItems.map(item => (
+            <ListItem
+                leftAvatar={<Avatar src={item.imageUrl} />}
+                primaryText={item.title}
+                secondaryText={`KES ${numeral(item.pricing.convertedTotalCost).format('0,0.00')}`}
+                secondaryTextLines={2}
+                disabled={true}
+            />
+        ))
+    }
+
     render() {
-        let time = moment().subtract(7, 'days');
-        let formattedTime = time.format('MMMM Do YYYY, hh:mm:ss');
+        console.log(this.props.order);
+        let time = moment(this.props.order.dateTime);
+        let formattedTime = time.format('MMMM Do YYYY, hh:mm');
         return (
             <Card>
                 <CardHeader
-                    title={`Cart #${Math.random(1000000, 100000000) * 10000000000000000}`}
-                    subtitle={`${formattedTime}, (${time.fromNow()})`}
+                    title={`Order: ${this.props.order._key}`}
+                    subtitle={<span>{formattedTime} {this.renderChip()}</span>}
                     actAsExpander={true}
                     showExpandableButton={true}
+                    titleStyle={{textTransform: 'upperCase'}}
                 />
                 <CardText expandable={true}>
                     <List>
-                        <Subheader>Items In Cart</Subheader>
-                        <ListItem
-                            leftAvatar={<Avatar src="https://images-na.ssl-images-amazon.com/images/I/41YcmojSz4L._SS100_.jpg" />}
-                            primaryText="Limited Edition Premium Leather Cover for Kindle Paperwhite"
-                            secondaryText="Shipping"
-                            secondaryTextLines={2}
-                            disabled={true}
-                        />
-                        <ListItem
-                            leftAvatar={<Avatar src="https://images-na.ssl-images-amazon.com/images/I/51vPHtoxctL._SS100_.jpg" />}
-                            primaryText="Caseable Kindle and Kindle Paperwhite Case, It's in the Water"
-                            secondaryText="In Transit"
-                            secondaryTextLines={2}
-                            disabled={true}
-                        />
-                        <ListItem
-                            leftAvatar={<Avatar src="https://images-na.ssl-images-amazon.com/images/I/51v%2BJCXpGqL._SS100_.jpg" />}
-                            primaryText="MoKo Case for Fire 7 2015 - Kids Shock Proof Convertible Handle Light Weight Super Protective Stand Cover for Amazon Fire Tablet (7 inch Display - 5th Generation, 2015 Release Only), BLUE"
-                            secondaryText="Received"
-                            secondaryTextLines={2}
-                            disabled={true}
-                        />
+                        <Subheader><strong>TOTAL: </strong>{numeral(Math.ceil(this.props.order.total)).format('0,0.00')}</Subheader>
+                        {this.renderCartItems()}
                     </List>
                 </CardText>
             </Card>
