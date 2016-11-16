@@ -44,6 +44,7 @@ class Footer extends Component {
                 user: this.props.authentication.signedInUser.gplusProfile,
                 userId: this.props.authentication.signedInUser.gplusProfile.id,
                 dateTime: moment().format(),
+                status: 'waiting'
             }, (error) => {
                 if(!error) {
                     this.props.appActions.receiveCartSendingResponseNoError();
