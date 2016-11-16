@@ -48,20 +48,21 @@ export default class App extends Component {
     console.log('listenOnceForItems');
     switch (itemName) {
       case 'carts':
-        itemFirebaseRef.once('value', (snap) => {
-          const items = [];
-          snap.forEach((child) => {
-            items.push(Object.assign(child.val(), { _key: child.key }));
+        console.log(this.props.authentication.signedInUser.gplusProfile.id);
+        itemFirebaseRef
+          .orderByChild('userId')
+          .startAt(this.props.authentication.signedInUser.gplusProfile.id)
+          .endAt(this.props.authentication.signedInUser.gplusProfile.id)
+          .once('value', (snap) => {
+            const items = [];
+            snap.forEach((child) => {
+              items.push(Object.assign(child.val(), { _key: child.key }));
+            });
+
+            // delete existing categories and replace them with new ones
+            this.props.orderActions.deleteOrders();
+            this.props.orderActions.addOrders(items);
           });
-
-          console.log(items);
-
-          console.log(this.props);
-
-          // delete existing categories and replace them with new ones
-          this.props.orderActions.deleteOrders();
-          this.props.orderActions.addOrders(items);
-        });
         break;
       default:
         // console.log('default case running');
