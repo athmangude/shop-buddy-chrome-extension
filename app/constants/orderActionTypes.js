@@ -1,4 +1,5 @@
 export const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM';
+export const ADD_ORDERS = 'ADD_ORDERS';
 export const UPDATE_ORDER_ITEM = 'UPDATE_ORDER_ITEM';
 export const DELETE_ORDER_ITEM = 'DELETE_ORDER_ITEM';
-export const EMPTY_ORDER = 'EMPTY_ORDER';
+export const DELETE_ORDERS = 'DELETE_ORDERS';

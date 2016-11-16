@@ -8,6 +8,9 @@ const actionsMap = {
       id: state.reduce((maxId, orderItem) => Math.max(orderItem.id, maxId), -1) + 1,
     }), ...state];
   },
+  [OrderItemsActionTypes.ADD_ORDERS](state, action) {
+    return action.orders.concat(state);
+  },
   [OrderItemsActionTypes.DELETE_ORDER_ITEM](state, action) {
     return state.filter(orderItem =>
       orderItem.id !== action.orderItem.id
@@ -20,7 +23,7 @@ const actionsMap = {
         orderItem)
     );
   },
-  [OrderItemsActionTypes.EMPTY_ORDER](state, action) {
+  [OrderItemsActionTypes.DELETE_ORDERS](state, action) {
     return state.filter(orderItem =>
       false
     );
