@@ -42,6 +42,7 @@ class Footer extends Component {
                 cartItems: this.props.cartItems,
                 total: this.props.total.toFixed(2),
                 user: this.props.authentication.signedInUser.gplusProfile,
+                userId: this.props.authentication.signedInUser.gplusProfile.id,
                 dateTime: moment().format(),
             }, (error) => {
                 if(!error) {
