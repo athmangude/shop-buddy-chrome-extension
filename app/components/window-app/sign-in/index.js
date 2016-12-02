@@ -19,8 +19,8 @@ const styles = {
     },
 
     googleIcon: {
-        marginTop: 20,
-        marginRight: 40,
+        // marginTop: 20,
+        // marginRight: 40,
     },
 
     googleAPIsWaitingMessageContainer: {
