@@ -22,6 +22,9 @@ const actionsMap = {
   [AuthenticationActionTypes.END_SIGNING_IN](state, action) {
     return Object.assign({}, state, { isSignedIn: true, isSigningIn: false, isSigningInComplete: true, lastSuccessfulSignIn: new Date(), signedInUser: action.user })
   },
+  // [AuthenticationActionTypes.SET_GPLUS_PROFILE](state, action) {
+  //   return Object.assign({}, state, { signedInUser: action.user })
+  // },
 };
 
 export default function authentication(state = initialState, action) {

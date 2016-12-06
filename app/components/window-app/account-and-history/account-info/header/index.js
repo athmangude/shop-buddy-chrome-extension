@@ -30,7 +30,6 @@ class Header extends Component {
     }
 
     render() {
-      console.log(this.props.authentication);
       // glus default cover image: https://lh3.googleusercontent.com/c5dqxl-2uHZ82ah9p7yxrVF1ZssrJNSV_15Nu0TUZwzCWqmtoLxCUJgEzLGtxsrJ6-v6R6rKU_-FYm881TTiMCJ_=w2048-h1152-n-rw-no
       return (
         <div style={Object.assign({}, styles.container, {

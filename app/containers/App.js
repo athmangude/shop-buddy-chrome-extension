@@ -45,10 +45,8 @@ export default class App extends Component {
   }
 
   listenOnceForItems(itemName, itemFirebaseRef) {
-    console.log('listenOnceForItems');
     switch (itemName) {
       case 'carts':
-        console.log(this.props.authentication.signedInUser.gplusProfile.id);
         itemFirebaseRef
           .orderByChild('userId')
           .startAt(this.props.authentication.signedInUser.gplusProfile.id)
@@ -155,7 +153,6 @@ export default class App extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props.authentication);
     // initiate fetching firebase data
     if (this.props.authentication.isSignedIn) {
       this.listenOnceForItems('carts', this.firebaseDatabaseRefs.carts);

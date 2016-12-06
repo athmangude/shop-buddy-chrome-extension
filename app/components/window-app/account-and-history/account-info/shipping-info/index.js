@@ -62,16 +62,14 @@ class ShippingInfo extends Component {
   }
 
   updateShippingInfo(updatedShippingInfo) {
-    console.log(updatedShippingInfo);
     this.props.firebaseRefs.database.users.child(this.props.authentication.signedInUser.gplusProfile.id).update(updatedShippingInfo, (error) => {
-      console.log(this.props);
       this.setState({
         submitting: false,
       });
 
       if (!error) {
-        console.log('successfully updated');
-        // this.props.authenticationActions.setGplusProfile(Object.assign({}, this.props.authentication.signedInUser.gplusProfile, updatedShippingInfo));
+        const gplusProfile = Object.assign({}, this.props.authentication.signedInUser.gplusProfile, updatedShippingInfo);
+        this.props.authenticationActions.endSigningIn(Object.assign({}, this.props.authentication.signedInUser, { gplusProfile: gplusProfile }));
       } else {
         console.log('there was an error updating');
       }
