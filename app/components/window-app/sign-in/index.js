@@ -9,26 +9,26 @@ import appTheme from '../../../appTheme.js';
 const accent1Color = getMuiTheme(appTheme).palette.accent1Color;
 
 const styles = {
-    container: {
-        height: '100vh',
-        margin: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-    },
+  container: {
+    height: '100vh',
+    margin: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
 
-    googleIcon: {
-        // marginTop: 20,
-        // marginRight: 40,
-    },
+  googleIcon: {
+    // marginTop: 20,
+    // marginRight: 40,
+  },
 
-    googleAPIsWaitingMessageContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-    }
+  googleAPIsWaitingMessageContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  }
 }
 
 class SignIn extends Component {
@@ -47,99 +47,95 @@ class SignIn extends Component {
     }
 
     authorize(params, callback) {
-        window.gapi.auth.authorize(Object.assign({ 'immediate': false, }, params, { scope: params.scopes[0] }), (accessToken) => {
-            if (!accessToken) {
-                console.log('not authorized');
-            } else {
-                callback(accessToken);
-            }
-        });
+      window.gapi.auth.authorize(Object.assign({ 'immediate': false, }, params, { scope: params.scopes[0] }), (accessToken) => {
+        if (!accessToken) {
+          console.log('not authorized');
+        } else {
+          callback(accessToken);
+        }
+      });
     }
 
     onStartShoppingClicked() {
       this.props.firebaseRefs.database.users.child(this.state.chromeUser.id).once('value', (snap) => {
-          if (!snap.val()) {
-            // the user does not exist, add them
-            this.props.firebaseRefs.database.users.child(this.state.chromeUser.id).set(this.state.gplusProfile, (error) => {
-              if (!error) {
-                this.props.authenticationActions.endSigningIn({
-                  authToken: this.state.authToken,
-                  chromeUser: this.state.chromeUser,
-                  gplusProfile: this.state.gplusProfile,
-                });
-              }
-            });
-          } else {
-            this.props.authenticationActions.endSigningIn({
-              authToken: this.state.authToken,
-              chromeUser: this.state.chromeUser,
-              gplusProfile: this.state.gplusProfile,
-            });
-          }
+        if (!snap.val()) {
+          // the user does not exist, add them
+          this.props.firebaseRefs.database.users.child(this.state.chromeUser.id).set(Object.assign({}, this.state.gplusProfile, { phoneNumber: '', shippingAddress: '' }), (error) => {
+            if (!error) {
+              this.props.authenticationActions.endSigningIn({
+                authToken: this.state.authToken,
+                chromeUser: this.state.chromeUser,
+                gplusProfile: this.state.gplusProfile,
+              });
+            }
+          });
+        } else {
+          this.props.authenticationActions.endSigningIn({
+            authToken: this.state.authToken,
+            chromeUser: this.state.chromeUser,
+            gplusProfile: Object.assign({}, this.state.gplusProfile, snap.val()),
+          });
+        }
       });
     }
 
     onSignInClicked() {
-        chrome.identity.getAuthToken({ 'interactive': true }, (token) => {
-
-            // update token in chrome
-            this.setState({
-                authToken: token,
-            });
-
-            chrome.identity.getProfileUserInfo( (userInfo) => {
-
-                // update chrome user in state
-                this.setState({
-                    chromeUser: userInfo,
-                });
-
-                window.gapi.auth.init(() => {
-                    const params = { immediate: true, client_id: chrome.runtime.getManifest().oauth2.client_id, scope: chrome.runtime.getManifest().oauth2.scopes };
-
-                    window.gapi.auth.authorize(params, (result) => {
-                        window.gapi.client.request({
-                            'path': `/plus/v1/people/${userInfo.id}`,
-                            'callback': (result) => {
-
-                                if (result.error) {
-
-                                    // retry loging the user in one more time
-                                    window.gapi.auth.authorize(params, (result) => {
-                                        window.gapi.client.request({
-                                            'path': `/plus/v1/people/${userInfo.id}`,
-                                            'callback': (result) => {
-
-                                                if (result.error) {
-                                                    // open the snack to display the error
-                                                    this.setState({
-                                                        snackbarOpen: true,
-                                                    });
-
-                                                    return;
-                                                }
-
-                                                // update gplusProfile
-                                                this.setState({
-                                                    gplusProfile: result
-                                                });
-                                            }
-                                        });
-                                    });
-
-                                    return;
-                                }
-
-                                // update gplusProfile
-                                this.setState({
-                                    gplusProfile: result
-                                });
-                            }
-                        });
-                    });
-                });
-            });
+      chrome.identity.getAuthToken({ 'interactive': true }, (token) => {
+        // update token in chrome
+        this.setState({
+            authToken: token,
         });
+
+        chrome.identity.getProfileUserInfo( (userInfo) => {
+          // update chrome user in state
+          this.setState({
+              chromeUser: userInfo,
+          });
+
+          window.gapi.auth.init(() => {
+            const params = { immediate: true, client_id: chrome.runtime.getManifest().oauth2.client_id, scope: chrome.runtime.getManifest().oauth2.scopes };
+
+            window.gapi.auth.authorize(params, (result) => {
+              window.gapi.client.request({
+                'path': `/plus/v1/people/${userInfo.id}`,
+                'callback': (result) => {
+
+                  if (result.error) {
+                    // retry loging the user in one more time
+                    window.gapi.auth.authorize(params, (result) => {
+                      window.gapi.client.request({
+                        'path': `/plus/v1/people/${userInfo.id}`,
+                        'callback': (result) => {
+                          if (result.error) {
+                            // open the snack to display the error
+                            this.setState({
+                              snackbarOpen: true,
+                            });
+
+                            return;
+                          }
+
+                          // update gplusProfile
+                          this.setState({
+                              gplusProfile: result
+                          });
+                        }
+                      });
+                    });
+
+                    return;
+                  }
+
+                  // update gplusProfile
+                  this.setState({
+                    gplusProfile: result
+                  });
+                }
+              });
+            });
+          });
+        });
+      });
     }
 
     handleRequestClose = () => {
