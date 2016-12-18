@@ -38,20 +38,22 @@ class Footer extends Component {
         this.setState({
             cartId: cartId,
         }, () => {
-            this.props.firebaseRefs.database.carts.child(cartId).set({
-                cartItems: this.props.cartItems,
-                total: this.props.total.toFixed(2),
-                user: this.props.authentication.signedInUser.gplusProfile,
-                userId: this.props.authentication.signedInUser.gplusProfile.id,
-                dateTime: moment().format(),
-                status: 'waiting'
-            }, (error) => {
-                if(!error) {
-                    this.props.appActions.receiveCartSendingResponseNoError();
-                } else {
-                    this.props.appActions.receiveCartSendingResponseWithError();
-                }
-            });
+          const dateTime = moment();
+          this.props.firebaseRefs.database.carts.child(cartId).set({
+              cartItems: this.props.cartItems,
+              total: this.props.total.toFixed(2),
+              user: this.props.authentication.signedInUser.gplusProfile,
+              userId: this.props.authentication.signedInUser.gplusProfile.id,
+              dateTime: dateTime.format(),
+              timestamp: parseInt(dateTime.format('x')),
+              status: 'waiting'
+          }, (error) => {
+              if(!error) {
+                  this.props.appActions.receiveCartSendingResponseNoError();
+              } else {
+                  this.props.appActions.receiveCartSendingResponseWithError();
+              }
+          });
         });
     }
 
