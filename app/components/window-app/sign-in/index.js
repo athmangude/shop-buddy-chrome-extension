@@ -3,6 +3,7 @@ import { RaisedButton, Avatar, Snackbar, CircularProgress } from 'material-ui';
 import ShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
 import FontIcon from 'material-ui/FontIcon';
 import $ from 'jquery';
+import moment from 'moment';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import appTheme from '../../../appTheme.js';
@@ -60,7 +61,7 @@ class SignIn extends Component {
       this.props.firebaseRefs.database.users.child(this.state.chromeUser.id).once('value', (snap) => {
         if (!snap.val()) {
           // the user does not exist, add them
-          this.props.firebaseRefs.database.users.child(this.state.chromeUser.id).set(Object.assign({}, this.state.gplusProfile, { phoneNumber: '', shippingAddress: '' }), (error) => {
+          this.props.firebaseRefs.database.users.child(this.state.chromeUser.id).set(Object.assign({}, this.state.gplusProfile, { phoneNumber: '', shippingAddress: '', dateTime: moment().format() }), (error) => {
             if (!error) {
               this.props.authenticationActions.endSigningIn({
                 authToken: this.state.authToken,
