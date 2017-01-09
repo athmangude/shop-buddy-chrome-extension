@@ -27,6 +27,7 @@ class Footer extends Component {
 
         this.onSignIn = this.onSignIn.bind(this);
         this.onShopbuddyCheckout = this.onShopbuddyCheckout.bind(this);
+        this.onUpdateShippingInfoClicked = this.onUpdateShippingInfoClicked.bind(this);
     }
 
     onShopbuddyCheckout() {
@@ -77,6 +78,40 @@ class Footer extends Component {
         this.props.appActions.resetCheckout();
     }
 
+    closeWindowIfExists() {
+        if (windowId > 0) {
+            chrome.windows.remove(windowId);
+            const windowId = chrome.windows.WINDOW_ID_NONE;
+        }
+    }
+
+    onUpdateShippingInfoClicked(event) {
+        console.log(event);
+        event.preventDefault();
+        // this.closeWindowIfExists();
+        const options = {
+            type: 'popup',
+            left: 100, top: 100,
+            width: 800, height: 475
+        };
+
+        options.url = 'window.html';
+        chrome.windows.create(options, (win) => {
+            const windowId = win.id;
+        });
+    }
+
+    renderShippingInfoUpdateReminder() {
+        if (!this.props.authentication.signedInUser.gplusProfile.shippingAddress.length || !this.props.authentication.signedInUser.gplusProfile.phoneNumber.length) {
+            return (
+              <span style={{
+                  fontSize: 'smaller',
+                  marginTop: -10,
+              }}>Checkout is disabled. Please <a href="" style={{ textDecoration: 'none', fontStyle: 'italic', color: 'rgb(240, 193, 75)' }} onClick={this.onUpdateShippingInfoClicked}>update</a> your shipping info</span>
+            )
+        }
+    }
+
     render() {
       return (
         <div style={{
@@ -94,7 +129,10 @@ class Footer extends Component {
             label={this.props.authentication.isSignedIn ? 'Checkout with Shopbuddy' : 'Sign In to Checkout With Shopbuddy'}
             secondary={this.props.authentication.isSignedIn}
             primary={!this.props.authentication.isSignedIn}
-            style={style} />
+            style={style}
+            disabled={!this.props.authentication.signedInUser.gplusProfile.shippingAddress.length || !this.props.authentication.signedInUser.gplusProfile.phoneNumber.length}
+          />
+          {this.renderShippingInfoUpdateReminder()}
         </div>
       );
     }

@@ -30,7 +30,7 @@ class Footer extends Component {
     }
 
     onViewTransactionHistoryTouchTapped() {
-        this.closeWindowIfExists();
+        // this.closeWindowIfExists();
         const options = {
             type: 'popup',
             left: 100, top: 100,
