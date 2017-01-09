@@ -16,6 +16,7 @@ export const scrapStoreCheckoutPage = (host, exchangeRate) => {
             asin: cartItemNode.dataset.asin,
             outOfStock: cartItemNode.dataset.outofstock,
             imageUrl: $(cartItemNode).find(storeConfig.imageNode).attr('src'),
+            exchangeRate: exchangeRate,
         }
 
         cartItems.push(cartItem);
