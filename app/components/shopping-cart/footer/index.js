@@ -74,6 +74,18 @@ class Footer extends Component {
         window.parent.postMessage({ action: 'OPEN_WINDOW_APP', options }, '*');
     }
 
+    buttonState() {
+        if (!this.props.authentication.isSignedIn) {
+            return true
+        }
+
+        if(!this.props.authentication.signedInUser.gplusProfile.shippingAddress.length || !this.props.authentication.signedInUser.gplusProfile.phoneNumber.length) {
+            return true;
+        }
+
+        return false;
+    }
+
     componentWillMount() {
         this.props.appActions.resetCheckout();
     }
@@ -102,13 +114,22 @@ class Footer extends Component {
     }
 
     renderShippingInfoUpdateReminder() {
+        if (!this.props.authentication.isSignedIn) {
+            return (
+                <span style={{
+                    fontSize: 'smaller',
+                    marginTop: -10,
+                }}>Checkout is disabled. Please <a href="" style={{ textDecoration: 'none', fontStyle: 'italic', color: 'rgb(240, 193, 75)' }} onClick={this.onUpdateShippingInfoClicked}>login</a> and update your shipping info</span>
+            );
+        }
+
         if (!this.props.authentication.signedInUser.gplusProfile.shippingAddress.length || !this.props.authentication.signedInUser.gplusProfile.phoneNumber.length) {
             return (
               <span style={{
                   fontSize: 'smaller',
                   marginTop: -10,
               }}>Checkout is disabled. Please <a href="" style={{ textDecoration: 'none', fontStyle: 'italic', color: 'rgb(240, 193, 75)' }} onClick={this.onUpdateShippingInfoClicked}>update</a> your shipping info</span>
-            )
+          );
         }
     }
 
@@ -130,7 +151,7 @@ class Footer extends Component {
             secondary={this.props.authentication.isSignedIn}
             primary={!this.props.authentication.isSignedIn}
             style={style}
-            disabled={!this.props.authentication.signedInUser.gplusProfile.shippingAddress.length || !this.props.authentication.signedInUser.gplusProfile.phoneNumber.length}
+            disabled={this.buttonState()}
           />
           {this.renderShippingInfoUpdateReminder()}
         </div>
