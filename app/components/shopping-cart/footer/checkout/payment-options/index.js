@@ -61,7 +61,7 @@ class PaymentOptions extends Component {
         if (this.state.selectedPaymentMethod === 'mpesa') {
             return (
                 <div>
-                    <p>Pay <strong>KES {numeral(Math.ceil(this.props.total)).format('0,0.00')}</strong> to Mpesa Paybill Number <strong>537624</strong>.</p>
+                    <p>Pay <strong>KES {numeral(Math.ceil(this.props.total)).format('0,0.00')}</strong> to Mpesa Paybill Number <strong>537624</strong> and enter Account Number <strong>{this.props.authentication.signedInUser.gplusProfile.displayName}</strong>.</p>
                     <Form
                         onValid={this.enableButton.bind(this)}
                         onInvalid={this.disableButton.bind(this)}
