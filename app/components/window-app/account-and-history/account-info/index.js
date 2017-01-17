@@ -5,7 +5,7 @@ import ShippingInfo from './shipping-info';
 class AccountInfo extends Component {
   render() {
     return (
-      <div>
+      <div style={{ display: 'flex' }}>
         <Header {...this.props} />
         <ShippingInfo {...this.props} />
       </div>
