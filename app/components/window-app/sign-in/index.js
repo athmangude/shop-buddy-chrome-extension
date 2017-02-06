@@ -118,7 +118,10 @@ class SignIn extends Component {
 
                           // update gplusProfile
                           this.setState({
-                              gplusProfile: result
+                              gplusProfile: Object.assign({}, result, {
+                                shippingAddress: '',
+                                phoneNumber: ''
+                              })
                           });
                         }
                       });
@@ -129,7 +132,10 @@ class SignIn extends Component {
 
                   // update gplusProfile
                   this.setState({
-                    gplusProfile: result
+                    gplusProfile: Object.assign({}, result, {
+                      shippingAddress: '',
+                      phoneNumber: ''
+                    })
                   });
                 }
               });

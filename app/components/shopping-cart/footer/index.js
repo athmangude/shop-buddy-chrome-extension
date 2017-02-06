@@ -98,7 +98,6 @@ class Footer extends Component {
     }
 
     onUpdateShippingInfoClicked(event) {
-        console.log(event);
         event.preventDefault();
         // this.closeWindowIfExists();
         const options = {
